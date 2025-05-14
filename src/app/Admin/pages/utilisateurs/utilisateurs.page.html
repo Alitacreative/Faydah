@@ -1,0 +1,58 @@
+  <div class="px-6 py-4">
+    <!-- Titre de la page -->
+    <div class="flex items-center justify-between mb-4">
+      <h1 class="text-xl font-medium text-gray-700">Utilisateurs</h1>
+    </div>
+
+    <!-- Barre de recherche et boutons d'action -->
+    <div class="flex items-center justify-between mb-6">
+      <div class="relative w-full max-w-lg">
+        <input 
+          type="text" 
+          [(ngModel)]="searchTerm"
+          placeholder="Rechercher" 
+          class="w-full pl-4 pr-10 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
+        />
+        <span class="absolute right-3 top-2.5 text-gray-400">
+          <ion-icon name="search-outline"></ion-icon>
+        </span>
+      </div>
+      <div class="flex space-x-3 ml-4">
+        <button (click)="openAddUserModal()" class="flex items-center justify-center w-10 h-10 rounded-full bg-green-600 text-white hover:bg-green-700 transition-colors">
+          <ion-icon name="add-outline" class="text-xl"></ion-icon>
+        </button>
+        <button (click)="openFilterModal()" class="flex items-center justify-center w-10 h-10 rounded-full bg-green-600 text-white hover:bg-green-700 transition-colors">
+          <ion-icon name="funnel-outline" class="text-xl"></ion-icon>
+        </button>
+      </div>
+    </div>
+
+    <!-- Filtres rapides -->
+    <div class="flex space-x-3 mb-6 overflow-x-auto pb-2">
+      <ng-container *ngFor="let filter of filters">
+        <button 
+          (click)="setFilter(filter)" 
+          [ngClass]="{'bg-gray-800 text-white': activeFilter === filter, 'bg-gray-100 text-gray-800': activeFilter !== filter}"
+          class="px-4 py-2 rounded-full text-sm font-medium transition-colors whitespace-nowrap"
+        >
+          {{ filter }}
+        </button>
+      </ng-container>
+    </div>
+
+    <!-- Liste des utilisateurs -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div *ngFor="let user of filteredUsers" class="relative bg-white rounded-lg p-4 border border-gray-200 flex items-center transition-shadow hover:shadow-md cursor-pointer">
+        <div class="relative overflow-hidden w-14 h-14 rounded-full mr-4">
+          <img [src]="user.image" alt="{{ user.name }}" class="w-full h-full object-cover" />
+        </div>
+        <div class="flex-grow">
+          <h3 class="text-lg font-medium text-gray-800">{{ user.name }}</h3>
+          <p class="text-sm text-gray-600">{{ user.category }}</p>
+        </div>
+        <button (click)="openUserOptions(user)" class="text-gray-500 hover:text-gray-700">
+          <ion-icon name="ellipsis-vertical-outline" class="text-xl"></ion-icon>
+        </button>
+      </div>
+    </div>
+  </div>

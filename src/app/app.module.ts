@@ -25,7 +25,7 @@ import { FormsModule } from '@angular/forms';
     IonicModule.forRoot(),
     AppRoutingModule,
     SharedModule,
-    FormsModule, // Ajouté depuis la version distante
+    FormsModule,
     StoreModule.forRoot({ theme: themeReducer }),
     IonicStorageModule.forRoot(), // Ajouté depuis la version locale
   ],

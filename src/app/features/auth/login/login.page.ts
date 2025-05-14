@@ -24,9 +24,9 @@ export class LoginPage {
 
   async login() {
     if (this.email === 'admin@' && this.password === 'admin') {
-      this.router.navigate(['/admin-dashboard']);
+      this.router.navigate(['/admin']);
     } else if (this.email === 'user@' && this.password === 'user') {
-      this.router.navigate(['/tabs/home']);
+      this.router.navigate(['/tabs']);
     } else {
       const alert = await this.alertController.create({
         header: 'Erreur',

@@ -1,0 +1,246 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+<div class="flex h-screen bg-gray-100">
+  <div [ngClass]="{'hidden': !isSidebarOpen}"
+    class="w-64 bg-gradient-to-b from-gray-800 to-gray-900 text-white flex flex-col shadow-xl transition-all duration-300">
+    <div class="p-6">
+      <h1 class="font-bold text-3xl text-yellow-500">Faydah</h1>
+    </div>
+    <div class="border-t border-gray-700 opacity-40 mx-5 mb-5"></div>
+
+    <nav class="flex-1 px-4 pb-4">
+      <a (click)="navigate('dashboard')"
+        [ngClass]="{'hover:bg-gray-700 cursor-pointer opacity-80 transition-colors mb-1': !isActive('dashboard'), 'bg-green-600 text-white opacity-100': isActive('dashboard')}"
+        class="flex items-center px-3 py-3 p-2 font-semibold rounded">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 " fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+        </svg>
+        <span class="">Tableau de bord</span>
+      </a>
+
+      <a (click)="navigate('utilisateurs')"
+        [ngClass]="{'hover:bg-gray-700 cursor-pointer opacity-80 transition-colors mb-1': !isActive('utilisateurs'), 'bg-green-600 text-white opacity-100': isActive('utilisateurs')}"
+        class="flex items-center px-3 py-3 p-2 font-semibold rounded">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 " fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+        <span class="">Utilisateurs</span>
+      </a>
+
+      <a (click)="navigate('dahira')"
+        [ngClass]="{'hover:bg-gray-700 cursor-pointer opacity-80 transition-colors mb-1': !isActive('dahira'), 'bg-green-600 text-white opacity-100': isActive('dahira')}"
+        class="flex items-center px-3 py-3 p-2 font-semibold rounded">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+        </svg>
+        <span class="">Dahira</span>
+      </a>
+
+      <a (click)="navigate('projets')"
+        [ngClass]="{'hover:bg-gray-700 cursor-pointer opacity-80 transition-colors mb-1': !isActive('projets'), 'bg-green-600 text-white opacity-100': isActive('projets')}"
+        class="flex items-center px-3 py-3 p-2 font-semibold rounded">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 " fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+        </svg>
+        <span class="">Projets</span>
+      </a>
+
+      <a (click)="navigate('ressources')"
+        [ngClass]="{'hover:bg-gray-700 cursor-pointer opacity-80 transition-colors mb-1': !isActive('ressources'), 'bg-green-600 text-white opacity-100': isActive('ressources')}"
+        class="flex items-center px-3 py-3 p-2 font-semibold rounded">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 " fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+        </svg>
+        <span class="">Ressources</span>
+      </a>
+      <a (click)="navigate('demandes')"
+        [ngClass]="{'hover:bg-gray-700 cursor-pointer opacity-80 transition-colors mb-1': !isActive('demandes'), 'bg-green-600 text-white opacity-100': isActive('demandes')}"
+        class="flex items-center px-3 py-3 p-2 font-semibold rounded">
+        <div class="flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 " fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+          </svg>
+          <span class="mr-2">Demandes</span>
+          <span
+            [ngClass]="{'text-green-600 bg-white': isActive('demandes'), 'text-white bg-green-600': !isActive('demandes')}"
+            class="text-xs px-2.5 py-1 rounded-full">2</span>
+        </div>
+      </a>
+
+      <a (click)="navigate('statistiques')"
+        [ngClass]="{'hover:bg-gray-700 cursor-pointer opacity-80 transition-colors mb-1': !isActive('statistiques'), 'bg-green-600 text-white opacity-100': isActive('statistiques')}"
+        class="flex items-center px-3 py-3 p-2 font-semibold rounded">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 " fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+        </svg>
+        <span class="">Statistiques</span>
+      </a>
+    </nav>
+
+    <div class="mt-auto px-6 py-4 text-xs ">
+      Version 1.0 - Copyright 2025
+    </div>
+  </div>
+
+  <!-- Contenu principal -->
+  <main class="flex-1 overflow-y-auto text-black">
+    <!-- En-tête -->
+    <header class="sticky top-0 z-40 bg-white shadow-sm flex items-center justify-between p-4">
+      <div class="flex items-center">
+        <button (click)="toggleSidebar()" class="p-1 rounded-md hover:bg-gray-100 focus:outline-none">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
+          </svg>
+        </button>
+        <h2 class="ml-4 text-xl font-medium text-gray-800">{{title}}</h2>
+      </div>
+
+      <div class="relative w-64 md:w-80">
+        <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+          <svg class="w-5 h-5 " viewBox="0 0 24 24" fill="none">
+            <path
+              d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </span>
+        <input type="text"
+          class="w-full pl-10 pr-4 py-2 rounded-lg bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+          placeholder="Rechercher">
+      </div>
+
+      <div class="flex items-center">
+        <div class="relative mr-3">
+          <button class="relative p-1 rounded-full focus:outline-none focus:ring-2 focus:ring-gray-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+            </svg>
+            <span
+              class="absolute top-0 right-0 h-4 w-4 rounded-full bg-red-500 text-xs text-white flex items-center justify-center">3</span>
+          </button>
+        </div>
+
+        <!-- <div class="flex items-center cursor-pointer ml-3" (click)="openProfileDetail()">
+          <div class="h-9 w-9 rounded-full overflow-hidden">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile" class="h-full w-full object-cover">
+          </div>
+          <div class="ml-2">
+            <div class="text-sm font-medium text-gray-900">Dumont</div>
+            <div class="text-xs text-gray-500">Admin</div>
+          </div>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1 text-green-500" viewBox="0 0 20 20"
+            fill="currentColor">
+            <path fill-rule="evenodd"
+              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+              clip-rule="evenodd" />
+          </svg>
+        </div> -->
+        <!-- Tooltip Container -->
+        <div class="tooltip-container relative inline-block max-w-xs">
+          <!-- Trigger -->
+          <div
+            class="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-xl shadow-xs cursor-pointer0"
+            (click)="toggleTooltip()">
+            <img class="w-9 h-9 rounded-full"
+            src="https://randomuser.me/api/portraits/men/32.jpg"
+              alt="Avatar">
+
+            <div class="flex-1">
+              <h4 class="text-sm font-semibold text-gray-800 ">
+                Amanda Harvey
+              </h4>
+              <p class="text-sm text-gray-500">
+                Admin
+              </p>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1 text-green-500" viewBox="0 0 20 20"
+            fill="currentColor">
+            <path fill-rule="evenodd"
+              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+              clip-rule="evenodd" />
+          </svg>
+          </div>
+
+          <!-- Tooltip Content -->
+          <div
+            class="absolute z-10 w-full max-w-xs mt-2 transition-all duration-300 transform bg-white border border-gray-100 rounded-xl shadow-md dark:bg-neutral-800 "
+            [class]="showTooltip ? 'opacity-100 visible scale-100' : 'opacity-0 invisible scale-95'">
+            <!-- Arrow -->
+            <div
+              class="absolute -top-2 right-4 w-4 h-4 rotate-45 bg-white border-t border-l border-gray-200 dark:bg-neutral-800 ">
+            </div>
+
+            <!-- Header -->
+            <div class="flex items-center gap-3 p-4 border-b border-gray-200 ">
+              <img class="w-10 h-10 rounded-full ring-2 ring-white"
+              src="https://randomuser.me/api/portraits/men/32.jpg"
+                alt="Avatar">
+              <div class="flex-1">
+                <h4 class="font-semibold text-gray-800 dark:text-white">
+                  Amanda Harvey
+                  <span
+                    class="inline-flex items-center px-1.5 py-0.5 ml-0.5 text-xs font-medium bg-gray-800 text-white rounded-md dark:bg-white dark:text-neutral-800">
+                    ADMIN
+                  </span>
+                </h4>
+                <p class="text-sm text-gray-500 ">
+                  Storyteller
+                </p>
+              </div>
+            </div>
+
+            <!-- List -->
+            <ul class="p-4 space-y-2">
+              <li class="flex items-center gap-3 text-sm text-gray-800 ">
+                <ion-icon name="business-outline" class="w-4 h-4 text-gray-600 "></ion-icon>
+                Pixeel Ltd.
+              </li>
+              <li class="flex items-center gap-3 text-sm text-gray-800 ">
+                <ion-icon name="phone-portrait-outline" class="w-4 h-4 text-gray-600 "></ion-icon>
+                (892) 312-5483
+              </li>
+              <li class="flex items-center gap-3 text-sm text-gray-800 ">
+                <ion-icon name="mail-outline" class="w-4 h-4 text-gray-600 "></ion-icon>
+                amandaemail.com
+              </li>
+            </ul>
+
+            <!-- Footer -->
+            <div class="flex items-center justify-between p-3 bg-gray-100 dark:bg-neutral-800 rounded-b-xl">
+              <a href="#"
+                class="flex items-center gap-1 text-xs text-gray-500 hover:text-blue-600  dark:hover:text-white">
+                <ion-icon name="flag-outline" class="w-3 h-3"></ion-icon>
+                Flag
+              </a>
+              <div size="small"
+                class="px-3 py-1.5 text-sm font-medium bg-blue-600 text-white rounded-full hover:bg-blue-700">
+                Follow
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Contenu -->
+    <div class="">
+      <!-- Router outlet pour l'affichage des pages -->
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>

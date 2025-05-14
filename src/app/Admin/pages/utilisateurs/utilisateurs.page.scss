@@ -1,0 +1,56 @@
+.user-card {
+  transition: all 0.2s ease-in-out;
+}
+
+.user-card:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.filter-button {
+  transition: all 0.2s ease-in-out;
+}
+
+.filter-button.active {
+  background-color: #1f2937;
+  color: white;
+}
+
+/* Style pour l'en-tête avec le titre Utilisateurs */
+.header-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+}
+
+/* Style pour les icônes dans les boutons d'action */
+.action-icon {
+  font-size: 1.25rem;
+}
+
+/* Style pour l'image de profil */
+.profile-image {
+  border: 2px solid #f3f4f6;
+}
+
+/* Animation subtile au survol des cartes utilisateur */
+@keyframes cardHover {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-2px); }
+}
+
+.user-card:hover {
+  animation: cardHover 0.3s forwards;
+}
+
+/* Personnalisation du scrollbar pour les filtres */
+.filters-container::-webkit-scrollbar {
+  height: 4px;
+}
+
+.filters-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.filters-container::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 10px;
+}
