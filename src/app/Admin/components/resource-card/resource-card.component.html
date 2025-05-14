@@ -1,0 +1,17 @@
+<div class="bg-white rounded-lg p-4 mb-4 relative" *ngIf="resource">
+  <div class="flex justify-between items-start">
+    <div>
+      <h3 class="text-lg font-medium truncate">{{ resource.title }}</h3>
+      <p class="text-gray-600 text-sm mt-2">{{ resource.description }}</p>
+      <p class="text-gray-500 text-xs mt-4">Ajouté le {{ resource.dateAdded }}</p>
+    </div>
+    <div class="flex flex-col items-end">
+      <span class="px-3 py-1 rounded-full text-xs bg-green-100 text-green-800">
+        {{ resource.type }}
+      </span>
+      <button class="mt-2 text-gray-400">
+        <ion-icon name="ellipsis-horizontal"></ion-icon>
+      </button>
+    </div>
+  </div>
+</div>

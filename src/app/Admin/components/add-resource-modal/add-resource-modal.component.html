@@ -1,0 +1,43 @@
+<!-- Header -->
+<div class="bg-blue-500 p-4 flex justify-between items-center text-white">
+  <h1 class="text-xl font-semibold">Ajouter une ressource</h1>
+  <button class="bg-gray-300 p-2 rounded" (click)="cancel()">Annuler</button>
+</div>
+
+<!-- Formulaire -->
+<div class="p-6 space-y-6">
+  <form [formGroup]="resourceForm" (ngSubmit)="confirm()" class="space-y-4">
+    <!-- Titre -->
+    <div class="flex flex-col">
+      <label for="title" class="font-semibold mb-1">Titre</label>
+      <input id="title" formControlName="title" type="text" class="border p-2 rounded" aria-required="true">
+      <div *ngIf="resourceForm.get('title')?.invalid && resourceForm.get('title')?.touched" class="error-message mt-2 text-red-500">
+        <span class="text-xs">Le titre est requis</span>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="flex flex-col">
+      <label for="description" class="font-semibold mb-1">Description</label>
+      <textarea id="description" formControlName="description" rows="4" class="border p-2 rounded" aria-required="true"></textarea>
+      <div *ngIf="resourceForm.get('description')?.invalid && resourceForm.get('description')?.touched" class="error-message mt-2 text-red-500">
+        <span class="text-xs">La description est requise</span>
+      </div>
+    </div>
+
+    <!-- Type de ressource -->
+    <div class="flex flex-col">
+      <label for="type" class="font-semibold mb-1">Type de ressource</label>
+      <select id="type" formControlName="type" class="border p-2 rounded" aria-required="true">
+        <option *ngFor="let type of resourceTypes" [value]="type">{{ type }}</option>
+      </select>
+    </div>
+
+    <!-- Bouton de soumission -->
+    <div class="mt-4">
+      <button type="submit" class="bg-blue-500 text-white p-2 rounded w-full" [disabled]="resourceForm.invalid">
+        Ajouter la ressource
+      </button>
+    </div>
+  </form>
+</div>

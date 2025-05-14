@@ -1,0 +1,39 @@
+
+  <div class="px-4 py-6">
+    <!-- Titre principal -->
+    <h1 class="text-2xl font-bold mb-6">Ressources</h1>
+
+    <!-- Barre de recherche spécifique aux ressources -->
+    <div class="mb-8">
+      <ion-searchbar placeholder="Rechercher un projet" 
+                     (ionInput)="searchResources($event)" 
+                     class="custom-searchbar rounded-md"></ion-searchbar>
+    </div>
+
+    <!-- Filtres et bouton d'ajout -->
+    <div class="flex justify-between items-center mb-6">
+      <div class="flex">
+        <button *ngFor="let filter of filters" 
+                (click)="setFilter(filter)"
+                [ngClass]="{'bg-green-100 text-green-800': currentFilter === filter,
+                           'bg-gray-100 text-gray-600': currentFilter !== filter}"
+                class="px-4 py-2 rounded-full text-sm font-medium mr-2">
+          {{ filter }}
+        </button>
+      </div>
+      <div class="flex">
+        <button (click)="openAddResourceModal()" 
+                class="bg-green-500 hover:bg-green-600 text-white rounded-full w-10 h-10 flex items-center justify-center">
+          <ion-icon name="add-outline" size="large"></ion-icon>
+        </button>
+        <button class="bg-green-500 hover:bg-green-600 text-white rounded-full w-10 h-10 flex items-center justify-center ml-2">
+          <ion-icon name="funnel-outline" size="large"></ion-icon>
+        </button>
+      </div>
+    </div>
+
+    <!-- Liste des ressources -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <app-resource-card *ngFor="let resource of resources" [resource]="resource"></app-resource-card>
+    </div>
+  </div>

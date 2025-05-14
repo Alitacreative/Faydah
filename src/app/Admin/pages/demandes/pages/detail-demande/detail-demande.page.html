@@ -1,0 +1,89 @@
+<div class="p-6 bg-gray-100 min-h-screen">
+  <div class="mb-6">
+    <button 
+      (click)="goBack()"
+      class="flex items-center text-gray-600 hover:text-gray-900"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+      </svg>
+      Retour
+    </button>
+  </div>
+
+  <div *ngIf="!demand && !notFound" class="flex justify-center items-center h-64">
+    <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+  </div>
+
+  <div *ngIf="notFound" class="bg-white p-6 rounded-lg shadow">
+    <h2 class="text-2xl font-semibold text-red-600 mb-4">Demande non trouvée</h2>
+    <p class="text-gray-600">Cette demande n'existe pas ou a été supprimée.</p>
+  </div>
+
+  <div *ngIf="demand" class="bg-white rounded-lg shadow overflow-hidden">
+    <div class="border-b px-6 py-4">
+      <h1 class="text-2xl font-semibold text-gray-800">Détails de la demande #{{ demand.id }}</h1>
+    </div>
+
+    <div class="p-6">
+      <!-- Status Badge -->
+      <div class="mb-6 flex justify-between items-center">
+        <span 
+          [class]="'px-3 py-1 inline-flex text-sm font-semibold rounded-full ' + getStatusColor(demand.statut)"
+        >
+          {{ demand.statut }}
+        </span>
+        <span class="text-gray-500">Date: {{ demand.date }}</span>
+      </div>
+
+      <!-- Main Information -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div>
+          <h2 class="text-lg font-medium text-gray-800 mb-4">Informations de la demande</h2>
+          
+          <div class="space-y-3">
+            <div>
+              <label class="block text-sm font-medium text-gray-500">Type</label>
+              <div class="mt-1 text-gray-900">{{ demand.type }}</div>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-500">Sujet</label>
+              <div class="mt-1 text-gray-900">{{ demand.sujet }}</div>
+            </div>
+            
+            <div *ngIf="demand.motifRejet">
+              <label class="block text-sm font-medium text-gray-500">Motif du rejet</label>
+              <div class="mt-1 text-red-600">{{ demand.motifRejet }}</div>
+            </div>
+          </div>
+        </div>
+        
+        <div>
+          <h2 class="text-lg font-medium text-gray-800 mb-4">Informations du demandeur</h2>
+          
+          <div class="space-y-3">
+            <div>
+              <label class="block text-sm font-medium text-gray-500">Nom</label>
+              <div class="mt-1 text-gray-900">{{ demand.demandeur }}</div>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-500">Rôle</label>
+              <div class="mt-1 text-gray-900">{{ demand.role }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Documents Section -->
+      <div class="border-t pt-6">
+        <h2 class="text-lg font-medium text-gray-800 mb-4">Documents associés</h2>
+        
+        <div class="text-gray-500 italic">
+          Aucun document associé à cette demande.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
