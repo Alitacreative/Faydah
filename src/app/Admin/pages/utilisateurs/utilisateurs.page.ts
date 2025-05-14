@@ -17,18 +17,18 @@ export class UtilisateursPage implements OnInit, OnDestroy {
 
   // Utilise soit un service, soit des données mockées
   users = [
-    { id: 1, name: 'Robert Fox', category: 'Disciples', image: 'assets/avatars/robert-fox.png' },
-    { id: 2, name: 'Ralph Edwards', category: 'Dahira', image: 'assets/avatars/ralph-edwards.png' },
-    { id: 3, name: 'Ronald Richards', category: 'Mouqadam', image: 'assets/avatars/ronald-richards.png' },
-    { id: 4, name: 'Brooklyn Simmons', category: 'Mouqadam', image: 'assets/avatars/brooklyn-simmons.png' },
-    { id: 5, name: 'Kristin Watson', category: 'Mouqadam', image: 'assets/avatars/kristin-watson.png' },
-    { id: 6, name: 'Courtney Henry', category: 'Mouqadam', image: 'assets/avatars/courtney-henry.png' },
-    { id: 7, name: 'Guy Hawkins', category: 'Disciples', image: 'assets/avatars/guy-hawkins.png' },
-    { id: 8, name: 'Leslie Alexander', category: 'Disciples', image: 'assets/avatars/leslie-alexander.png' },
+    { id: 1, name: 'Robert Fox', category: 'Disciples', image: 'assets/images/background2.jpg' },
+    { id: 2, name: 'Ralph Edwards', category: 'Dahira', image: 'assets/images/background2.jpg' },
+    { id: 3, name: 'Ronald Richards', category: 'Mouqadam', image: 'assets/images/background2.jpg' },
+    { id: 4, name: 'Brooklyn Simmons', category: 'Mouqadam', image: 'assets/images/background2.jpg' },
+    { id: 5, name: 'Kristin Watson', category: 'Mouqadam', image: 'assets/images/background2.jpg' },
+    { id: 6, name: 'Courtney Henry', category: 'Mouqadam', image: 'assets/images/background2.jpg' },
+    { id: 7, name: 'Guy Hawkins', category: 'Disciples', image: 'assets/images/background2.jpgg' },
+    { id: 8, name: 'Leslie Alexander', category: 'Disciples', image: 'assets/images/background2.jpg' },
     { id: 9, name: 'Jerome Bell', category: 'Disciples', image: 'assets/avatars/jerome-bell.png' },
-    { id: 10, name: 'Bessie Cooper', category: 'Disciples', image: 'assets/avatars/bessie-cooper.png' },
-    { id: 11, name: 'Esther Howard', category: 'Disciples', image: 'assets/avatars/esther-howard.png' },
-    { id: 12, name: 'Devon Lane', category: 'Disciples', image: 'assets/avatars/devon-lane.png' },
+    { id: 10, name: 'Bessie Cooper', category: 'Disciples', image: 'assets/images/background2.jpg' },
+    { id: 11, name: 'Esther Howard', category: 'Disciples', image: 'assets/images/background2.jpg' },
+    { id: 12, name: 'Devon Lane', category: 'Disciples', image: 'assets/images/background2.jpg' },
   ];
 
   filters = ['Tous', 'Disciples', 'Visiteurs', 'Resp. Dahira'];
