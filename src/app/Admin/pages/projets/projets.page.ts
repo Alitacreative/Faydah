@@ -16,12 +16,13 @@ export class ProjetsPage implements OnInit {
 
   allProjects: Project[] = [];
   filteredProjects: Project[] = [];
-  currentFilter: string = 'Tous';
   searchTerm: string = '';
   activeMenuId: string | null = null;
   currentPage: number = 1;
   itemsPerPage: number = 6;
   totalPages: number = 1;
+  filters: string[] = ['Tous', 'En cours', 'En attente', 'Terminées'];
+  activeFilter: string = 'Tous';
 
   constructor(
     private projectService: ProjectService,
@@ -44,13 +45,13 @@ export class ProjetsPage implements OnInit {
     let filtered = [...this.allProjects];
     
     // Appliquer le filtre de statut
-    if (this.currentFilter !== 'Tous') {
+    if (this.activeFilter !== 'Tous') {
       const statusMap: { [key: string]: string } = {
         'En cours': 'en_cours',
         'En attente': 'en_attente',
         'Terminées': 'termine'
       };
-      filtered = filtered.filter(project => project.status === statusMap[this.currentFilter]);
+      filtered = filtered.filter(project => project.status === statusMap[this.activeFilter]);
     }
     
     // Appliquer la recherche
@@ -68,7 +69,7 @@ export class ProjetsPage implements OnInit {
   }
 
   setFilter(filter: string) {
-    this.currentFilter = filter;
+    this.activeFilter = filter;
     this.currentPage = 1;
     this.applyFilters();
   }

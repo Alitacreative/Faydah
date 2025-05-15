@@ -12,7 +12,7 @@
 
       <div class="relative w-1/2">
         <input type="text" (input)="search($event)" placeholder="Rechercher un projet"
-          class="w-full p-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+          class="w-full p-2 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 absolute right-3 top-3.5" fill="none"
           viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -35,32 +35,17 @@
       </button>
     </div>
 
-    <!-- Filtres -->
-    <div class="flex overflow-x-auto space-x-1 pb-2">
-      <button
-        [ngClass]="{'bg-green-600 text-white': currentFilter === 'Tous', 'bg-white text-gray-700': currentFilter !== 'Tous'}"
-        (click)="setFilter('Tous')"
-        class="px-6 py-2 rounded-full shadow-sm focus:outline-none hover:bg-opacity-90 transition-colors">
-        Tous
-      </button>
-      <button
-        [ngClass]="{'bg-green-600 text-white': currentFilter === 'En cours', 'bg-white text-gray-700': currentFilter !== 'En cours'}"
-        (click)="setFilter('En cours')"
-        class="px-6 py-2 rounded-full shadow-sm focus:outline-none hover:bg-opacity-90 transition-colors">
-        En cours
-      </button>
-      <button
-        [ngClass]="{'bg-green-600 text-white': currentFilter === 'En attente', 'bg-white text-gray-700': currentFilter !== 'En attente'}"
-        (click)="setFilter('En attente')"
-        class="px-6 py-2 rounded-full shadow-sm focus:outline-none hover:bg-opacity-90 transition-colors">
-        En attente
-      </button>
-      <button
-        [ngClass]="{'bg-green-600 text-white': currentFilter === 'Terminées', 'bg-white text-gray-700': currentFilter !== 'Terminées'}"
-        (click)="setFilter('Terminées')"
-        class="px-6 py-2 rounded-full shadow-sm focus:outline-none hover:bg-opacity-90 transition-colors">
-        Terminées
-      </button>
+    <!-- Filtres rapides -->
+    <div class="flex space-x-3 mb-6 overflow-x-auto pb-2">
+      <ng-container *ngFor="let filter of filters">
+        <button 
+          (click)="setFilter(filter)" 
+          [ngClass]="{'bg-gray-800 text-white': activeFilter === filter, 'bg-gray-100 text-gray-800': activeFilter !== filter}"
+          class="px-4 py-2 rounded-full text-sm font-medium transition-colors whitespace-nowrap"
+        >
+          {{ filter }}
+        </button>
+      </ng-container>
     </div>
   </div>
 
