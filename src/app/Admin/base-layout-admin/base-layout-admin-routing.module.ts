@@ -28,10 +28,6 @@ const routes: Routes = [
         path: 'dahira',
         loadChildren: () => import('../pages/dahira/dahira.module').then( m => m.DahiraPageModule)
       },
-      {
-    path: 'ressources',
-    loadChildren: () => import('../pages/ressources/ressources.module').then(m => m.RessourcesPageModule)
-  },
       // {
       //   path: 'projets',
       //   loadChildren: () => import('../profile/profile.module').then(m => m.ProfilePageModule)
@@ -48,10 +44,10 @@ const routes: Routes = [
       //   path: 'statistiques',
       //   loadChildren: () => import('../finances/finances.module').then( m => m.FinancesPageModule)
       // },
-      {
-        path: 'demandes',
-        loadChildren: () => import('../pages/demandes/demandes.module').then( m => m.DemandesPageModule)
-      },
+      // {
+      //   path: 'demandes',
+      //   loadChildren: () => import('../finances/finances.module').then( m => m.FinancesPageModule)
+      // },
       {
         path: '',
         redirectTo: 'dashboard',

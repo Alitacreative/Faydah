@@ -40,14 +40,10 @@ const routes: Routes = [
   {
     path: 'bibliotheque/detail-tafsir/:id',
     loadChildren: () => import('./features/bibliotheque/pages/detail-tafsir/detail-tafsir.module').then( m => m.DetailTafsirPageModule)
-  },
-  
-  {
-    path: 'ressources',
-    loadChildren: () => import('./Admin/pages/ressources/ressources.module').then( m => m.RessourcesPageModule)
+  },   {
+    path: 'base-layout-admin',
+    loadChildren: () => import('./Admin/base-layout-admin/base-layout-admin.module').then( m => m.BaseLayoutAdminPageModule)
   }
-
-
 
  
 ];
