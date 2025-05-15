@@ -15,8 +15,8 @@ import { SharedModule } from './shared/shared.module';
 import { themeReducer } from './store/theme.reducer';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { provideHttpClient } from '@angular/common/http';
-import { TabsComponent } from "./features/tabs/components/tabs.component";
 import { FormsModule } from '@angular/forms';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,11 +27,12 @@ import { FormsModule } from '@angular/forms';
     SharedModule,
     FormsModule,
     StoreModule.forRoot({ theme: themeReducer }),
-    IonicStorageModule.forRoot(), // Ajouté depuis la version locale
+    IonicStorageModule.forRoot(),
+    EffectsModule.forRoot([]),
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    provideHttpClient(), // Ajouté depuis la version locale
+    provideHttpClient(),
   ],
   bootstrap: [AppComponent],
 })

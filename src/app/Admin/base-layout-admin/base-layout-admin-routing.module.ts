@@ -26,7 +26,7 @@ const routes: Routes = [
       // },
       {
         path: 'dahira',
-        loadChildren: () => import('../pages/dahira/dahira.module').then( m => m.DahiraPageModule)
+        loadChildren: () => import('../pages/dahira/dahira.module').then(m => m.DahiraPageModule)
       },
       {
       path: 'resources',
@@ -58,7 +58,15 @@ const routes: Routes = [
       // },
       {
         path: 'demandes',
-        loadChildren: () => import('../pages/demandes/demandes.module').then( m => m.DemandesPageModule)
+        loadChildren: () => import('../pages/demandes/demandes.module').then(m => m.DemandesPageModule)
+      },
+      {
+        path: 'notifications',
+        loadChildren: () => import('../pages/notifications/notifications.module').then(m => m.NotificationsPageModule)
+      },
+      {
+        path: 'maps',
+        loadChildren: () => import('../pages/maps/maps.module').then( m => m.MapsPageModule)
       },
       {
         path: '',
