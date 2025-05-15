@@ -1,0 +1,100 @@
+<div class="w-full max-w-full p-4 bg-gray-100 min-h-screen">
+  <!-- En-tête avec bouton retour -->
+  <div class="mb-6">
+    <button 
+      (click)="goBack()" 
+      class="flex items-center text-gray-700 hover:text-gray-900 focus:outline-none"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      Retour
+    </button>
+  </div>
+
+  <div *ngIf="project" class="bg-white rounded-lg shadow-md overflow-hidden">
+    <!-- En-tête du projet -->
+    <div class="p-6 border-b border-gray-200">
+      <div class="flex justify-between items-start">
+        <h1 class="text-2xl font-bold text-gray-800">{{ project.title }}</h1>
+        <span [ngClass]="getStatusClass(project.status)" class="px-3 py-1 rounded-full text-sm font-medium">
+          {{ getStatusLabel(project.status) }}
+        </span>
+      </div>
+      <p class="mt-2 text-gray-600">{{ project.description }}</p>
+
+      <!-- Barre de progression -->
+      <div class="mt-4">
+        <div class="flex justify-between items-center mb-1">
+          <span class="text-sm font-medium text-gray-700">Progression</span>
+          <span class="text-sm font-medium text-gray-700">{{ project.progress }}%</span>
+        </div>
+        <div class="h-2.5 bg-gray-200 rounded-full">
+          <div class="h-full bg-green-600 rounded-full" [style.width]="project.progress + '%'"></div>
+        </div>
+      </div>
+
+      <!-- Informations supplémentaires -->
+      <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="bg-gray-50 p-4 rounded-lg">
+          <h3 class="text-sm font-medium text-gray-500">Date d'échéance</h3>
+          <p class="mt-1 text-base font-medium text-gray-900">{{ formatDate(project.dueDate) }}</p>
+        </div>
+        <div class="bg-gray-50 p-4 rounded-lg">
+          <h3 class="text-sm font-medium text-gray-500">Montant total collecté</h3>
+          <p class="mt-1 text-base font-medium text-gray-900">{{ totalContribution | currency:'XAF':'symbol':'1.0-0' }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Liste des contributeurs -->
+    <div class="p-6">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">Contributeurs</h2>
+      
+      <div *ngIf="project.contributors && project.contributors.length > 0; else noContributors" class="space-y-2">
+        <div class="bg-gray-50 p-4 rounded-lg mb-4 grid grid-cols-12 font-medium text-gray-700">
+          <div class="col-span-5">Nom</div>
+          <div class="col-span-4">Date</div>
+          <div class="col-span-3 text-right">Montant</div>
+        </div>
+        
+        <div *ngFor="let contributor of project.contributors" class="bg-white border border-gray-200 p-4 rounded-lg shadow-sm grid grid-cols-12 items-center">
+          <div class="col-span-5">
+            <p class="font-medium text-gray-800">{{ contributor.name }}</p>
+          </div>
+          <div class="col-span-4 text-gray-600">
+            {{ formatDate(contributor.date) }}
+          </div>
+          <div class="col-span-3 text-right font-medium text-gray-800">
+            {{ contributor.amount | currency:'XAF':'symbol':'1.0-0' }}
+          </div>
+        </div>
+      </div>
+      
+      <ng-template #noContributors>
+        <div class="p-8 text-center text-gray-500">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+          </svg>
+          <p class="text-lg font-medium mb-2">Aucun contributeur pour l'instant</p>
+          <p>Ce projet n'a pas encore de contributions enregistrées.</p>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+  
+  <!-- Message d'erreur si le projet n'existe pas -->
+  <div *ngIf="!project" class="bg-white rounded-lg shadow-md p-8 text-center">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-red-500 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+    </svg>
+    <h2 class="text-xl font-semibold text-gray-800 mb-2">Projet introuvable</h2>
+    <p class="text-gray-600 mb-4">Le projet que vous recherchez n'existe pas ou a été supprimé.</p>
+    <button 
+      (click)="goBack()" 
+      class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none"
+    >
+      Retourner à la liste des projets
+    </button>
+  </div>
+</div>

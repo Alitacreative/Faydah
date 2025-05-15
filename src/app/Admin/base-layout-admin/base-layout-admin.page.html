@@ -111,21 +111,21 @@
 
       <div class="relative w-64 md:w-80">
         <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-          <svg class="w-5 h-5 " viewBox="0 0 24 24" fill="none">
+          <svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24" fill="none">
             <path
               d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
           </svg>
         </span>
         <input type="text"
-          class="w-full pl-10 pr-4 py-2 rounded-lg bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+          class="w-full border-none pl-10 pr-4 py-2 rounded-lg bg-gray-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
           placeholder="Rechercher">
       </div>
 
       <div class="flex items-center">
         <div class="relative mr-3">
-          <button class="relative p-1 rounded-full focus:outline-none focus:ring-2 focus:ring-gray-300">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24"
+          <button class="relative p-1 rounded-full focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-transparent">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-gray-600" fill="none" viewBox="0 0 24 24"
               stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
@@ -154,7 +154,7 @@
         <div class="tooltip-container relative inline-block max-w-xs">
           <!-- Trigger -->
           <div
-            class="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-xl shadow-xs cursor-pointer0"
+            class="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-xl shadow-xs cursor-pointer"
             (click)="toggleTooltip()">
             <img class="w-9 h-9 rounded-full"
             src="https://randomuser.me/api/portraits/men/32.jpg"
