@@ -30,10 +30,15 @@
   </div>
 
   <!-- Graphiques -->
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <div class="bg-white p-4 rounded shadow h-64">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 h-[400px]">
+    <div class="bg-white p-4 rounded shadow">
       <h2 class="text-lg font-semibold mb-2">Cotisations mensuelles</h2>
-      <canvas id="monthlyChart" class="w-full h-64"></canvas>
+      <!-- <canvas id="monthlyChart" class="w-full h-64"></canvas> -->
+      <div class="w-full ">
+        <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [xaxis]="chartOptions.xaxis"
+          [colors]="chartOptions.colors" [plotOptions]="chartOptions.plotOptions" [dataLabels]="chartOptions.dataLabels"
+          [responsive]="chartOptions.responsive"></apx-chart>
+      </div>
     </div>
     <div class="bg-white p-4 rounded shadow">
       <h2 class="text-lg font-semibold mb-2">Avancement des projets</h2>

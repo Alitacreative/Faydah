@@ -41,9 +41,10 @@ const routes: Routes = [
     path: 'bibliotheque/detail-tafsir/:id',
     loadChildren: () => import('./features/bibliotheque/pages/detail-tafsir/detail-tafsir.module').then( m => m.DetailTafsirPageModule)
   },
-  
-  
-  
+
+
+
+
  
 ];
 

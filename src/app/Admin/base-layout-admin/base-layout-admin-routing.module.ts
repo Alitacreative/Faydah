@@ -40,6 +40,10 @@ const routes: Routes = [
       //   path: 'projets',
       //   loadChildren: () => import('../profile/profile.module').then(m => m.ProfilePageModule)
       // },
+      {
+        path: 'projets',
+        loadChildren: () => import('../pages/projets/projets.module').then(m => m.ProjetsPageModule)
+      },
       // {
       //   path: 'ressources',
       //   loadChildren: () => import('../finances/finances.module').then( m => m.FinancesPageModule)
