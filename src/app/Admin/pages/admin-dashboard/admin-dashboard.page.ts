@@ -9,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminDashboardPage implements OnInit {
   chartOptions: any;
+  isHovered = false;
 
   constructor() {
     // Chart.register(...registerables);

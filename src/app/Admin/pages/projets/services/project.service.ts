@@ -93,14 +93,14 @@ export class ProjectService {
         if (index !== -1) {
             this.projects[index] = { ...project };
             this.projectsSubject.next([...this.projects]);
-        }
+        } 
     }
 
     changeStatus(id: string, status: 'en_cours' | 'en_attente' | 'termine'): void {
         const index = this.projects.findIndex(p => p.id === id);
         if (index !== -1) {
             this.projects[index].status = status;
-            this.projectsSubject.next([...this.projects]);
+            this.projectsSubject.next([...this.projects]);  
         }
     }
 

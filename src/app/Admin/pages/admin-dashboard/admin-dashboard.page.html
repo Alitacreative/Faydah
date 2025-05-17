@@ -1,32 +1,39 @@
 <!-- Contenu -->
-<div class="p-6 space-y-6">
+<div class="p-6 space-y-6 hide-scrollbar">
+
+  <div class=" mx-auto p">
+    <div class="flex items-center justify-between px-5 py-4 rounded-xl border border-amber-200"
+      [ngClass]="{'bg-amber-100/70 shadow-sm': isHovered, 'bg-amber-50': !isHovered}" (mouseenter)="isHovered = true"
+      (mouseleave)="isHovered = false">
+      <div class="flex items-center space-x-4">
+        <div class="relative">
+            <svg class="w-10 h-10 text-amber-700" width="34" height="34" viewBox="0 0 51 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19.1447 51.3948C20.6255 51.0816 29.6487 51.0816 31.1295 51.3948C32.3954 51.6872 33.7643 52.3704 33.7643 53.862C33.6907 55.2821 32.8576 56.5411 31.7065 57.3406C30.2139 58.5041 28.4623 59.241 26.6312 59.5065C25.6184 59.6378 24.6234 59.6407 23.646 59.5065C21.8119 59.241 20.0603 58.5041 18.5707 57.3376C17.4166 56.5411 16.5835 55.2821 16.5099 53.862C16.5099 52.3704 17.8788 51.6872 19.1447 51.3948ZM25.312 0.36364C31.4736 0.36364 37.7678 3.28731 41.5066 8.13822C43.9324 11.2618 45.0452 14.3823 45.0452 19.2332V20.4952C45.0452 24.2154 46.0285 26.4082 48.1923 28.9351C49.832 30.7967 50.3561 33.1863 50.3561 35.7788C50.3561 38.3684 49.5053 40.8266 47.8007 42.8225C45.5692 45.2151 42.4222 46.7426 39.2103 47.0081C34.556 47.4049 29.8986 47.739 25.1795 47.739C20.4574 47.739 15.8031 47.5391 11.1487 47.0081C7.93391 46.7426 4.78684 45.2151 2.55828 42.8225C0.853742 40.8266 0 38.3684 0 35.7788C0 33.1863 0.526965 30.7967 2.16379 28.9351C4.3953 26.4082 5.31381 24.2154 5.31381 20.4952V19.2332C5.31381 14.2511 6.55615 10.9933 9.11443 7.80408C12.918 3.15306 19.0149 0.36364 25.047 0.36364H25.312Z" fill="#181818"/>
+              </svg>
+          <div class="absolute -top-1 -right-1 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center">
+            <span class="text-white text-xs font-bold">2</span>
+          </div>
+        </div>
+        <span class="text-gray-800 font-semibold text-sm">02 Nouvelles demandes à approuver</span>
+      </div>
+
+      <button
+        class="flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-amber-200 hover:bg-amber-300 text-amber-800"
+        [ngClass]="{'translate-x-0': isHovered, '-translate-x-1': !isHovered}">
+        Afficher
+        <svg class="w-4 h-4 ml-1" [ngClass]="{'translate-x-1': isHovered, '': !isHovered}" fill="none"
+          stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
   <!-- Statistiques -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-    <div class="bg-white p-4 rounded shadow text-center">
-      <i class="fas fa-users text-blue-500 text-3xl mb-2"></i>
-      <h2 class="text-lg font-semibold">Disciples</h2>
-      <p class="text-2xl">438</p>
-    </div>
-    <div class="bg-white p-4 rounded shadow text-center">
-      <i class="fas fa-users-cog text-purple-500 text-3xl mb-2"></i>
-      <h2 class="text-lg font-semibold">Dahiras</h2>
-      <p class="text-2xl">28</p>
-    </div>
-    <div class="bg-white p-4 rounded shadow text-center">
-      <i class="fas fa-user-tie text-gray-500 text-3xl mb-2"></i>
-      <h2 class="text-lg font-semibold">Mouqadam</h2>
-      <p class="text-2xl">12</p>
-    </div>
-    <div class="bg-white p-4 rounded shadow text-center">
-      <i class="fas fa-coins text-green-500 text-3xl mb-2"></i>
-      <h2 class="text-lg font-semibold">Cotisations</h2>
-      <p class="text-2xl">15 000 XOF</p>
-    </div>
-    <div class="bg-white p-4 rounded shadow text-center">
-      <i class="fas fa-briefcase text-yellow-500 text-3xl mb-2"></i>
-      <h2 class="text-lg font-semibold">Projets</h2>
-      <p class="text-2xl">12</p>
-    </div>
+  <div class="w-full">
+    <app-stat-cards>
+      
+    </app-stat-cards>
   </div>
 
   <!-- Graphiques -->

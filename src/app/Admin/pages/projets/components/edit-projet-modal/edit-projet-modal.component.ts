@@ -1,24 +1,24 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import { IonicModule, ModalController } from '@ionic/angular';
 import { Project } from '../../models/projet.model';
 
 @Component({
   selector: 'app-edit-projet-modal',
   templateUrl: './edit-projet-modal.component.html',
   styleUrls: ['./edit-projet-modal.component.scss'],
-  imports: [IonicModule, CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
 })
-export class EditProjetModalComponent  implements OnInit {
+export class EditProjetModalComponent implements OnInit {
 
   @Input() project!: Project;
+  @Output() cancel = new EventEmitter<void>();
+  @Output() submit = new EventEmitter<Project>();
   projectForm!: FormGroup;
 
   constructor(
     private fb: FormBuilder,
-    private modalController: ModalController
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.projectForm = this.fb.group({
@@ -28,6 +28,25 @@ export class EditProjetModalComponent  implements OnInit {
       progress: [this.project.progress, [Validators.required, Validators.min(0), Validators.max(100)]],
       dueDate: [this.formatDateForInput(new Date(this.project.dueDate)), [Validators.required]]
     });
+
+    // Mise à jour automatique de la progression en fonction du statut
+    this.projectForm.get('status')?.valueChanges.subscribe(status => {
+      if (status === 'termine') {
+        this.projectForm.get('progress')?.setValue(100);
+      }
+    });
+
+    this.projectForm.get('progress')?.valueChanges.subscribe(progress => {
+      if (progress === 100) {
+        this.projectForm.get('status')?.setValue('termine');
+      }
+    })
+
+    this.projectForm.get('progress')?.valueChanges.subscribe(progress => {
+      if (progress !== 100) {
+        this.projectForm.get('status')?.setValue('en_cours');
+      }
+    })
   }
 
   formatDateForInput(date: Date): string {
@@ -43,18 +62,22 @@ export class EditProjetModalComponent  implements OnInit {
         ...this.project,
         title: this.projectForm.value.title,
         description: this.projectForm.value.description,
-        status: this.projectForm.value.status,
+        status: this.projectForm.value.progress === 100 ? "termine" : this.projectForm.value.status,
         progress: this.projectForm.value.progress,
         dueDate: new Date(this.projectForm.value.dueDate)
       };
-      
-      this.modalController.dismiss({
-        project: updatedProject
+
+      this.submit.emit(updatedProject);
+    } else {
+      // Marquer tous les champs comme touchés pour afficher les erreurs
+      Object.keys(this.projectForm.controls).forEach(key => {
+        const control = this.projectForm.get(key);
+        control?.markAsTouched();
       });
     }
   }
 
-  cancel() {
-    this.modalController.dismiss();
+  onCancel() {
+    this.cancel.emit();
   }
 }

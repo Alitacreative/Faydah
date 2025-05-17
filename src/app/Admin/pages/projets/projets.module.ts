@@ -8,6 +8,7 @@ import { ProjetsPageRoutingModule } from './projets-routing.module';
 
 import { ProjetsPage } from './projets.page';
 import { AddProjetModalComponent } from "./components/add-projet-modal/add-projet-modal.component";
+import { EditProjetModalComponent } from "./components/edit-projet-modal/edit-projet-modal.component";
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { AddProjetModalComponent } from "./components/add-projet-modal/add-proje
     FormsModule,
     IonicModule,
     ProjetsPageRoutingModule,
-    AddProjetModalComponent
+    AddProjetModalComponent,
+    EditProjetModalComponent
 ],
   declarations: [ProjetsPage]
 })

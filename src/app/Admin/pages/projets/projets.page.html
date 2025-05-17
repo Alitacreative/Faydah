@@ -1,15 +1,11 @@
-<!-- src/app/pages/projects/projects.component.html -->
 <div class="w-full max-w-full p-4 bg-gray-100 min-h-screen" (click)="closeMenu()">
   <!-- En-tête -->
   <div class="flex flex-col space-y-4">
     <div class="flex justify-between items-center">
-      <h1 class="text-2xl font-semibold text-gray-700">Projets</h1>
-
+      <h1 class="text-2xl font-semibold text-gray-700">Levée de fonds</h1>
     </div>
-
     <!-- Barre de recherche -->
     <div class="flex justify-between">
-
       <div class="relative w-1/2">
         <input type="text" (input)="search($event)" placeholder="Rechercher un projet"
           class="w-full p-2 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
@@ -19,7 +15,7 @@
             d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
         </svg>
       </div>
-      <button (click)="addProject()"
+      <button (click)="openAddModal()"
         class="ml-auto mr-2 flex items-center justify-center rounded-full h-10 w-10 bg-green-600 text-white hover:bg-green-700 focus:outline-none">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -38,24 +34,20 @@
     <!-- Filtres rapides -->
     <div class="flex space-x-3 mb-6 overflow-x-auto pb-2">
       <ng-container *ngFor="let filter of filters">
-        <button 
-          (click)="setFilter(filter)" 
+        <button (click)="setFilter(filter)"
           [ngClass]="{'bg-gray-800 text-white': activeFilter === filter, 'bg-gray-100 text-gray-800': activeFilter !== filter}"
-          class="px-4 py-2 rounded-full text-sm font-medium transition-colors whitespace-nowrap"
-        >
+          class="px-4 py-2 rounded-full text-sm font-medium transition-colors whitespace-nowrap">
           {{ filter }}
         </button>
       </ng-container>
     </div>
   </div>
-
   <!-- Grille de projets -->
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
     <div *ngFor="let project of getPaginatedProjects()" class="bg-white rounded-lg shadow-md overflow-hidden">
       <div class="p-5">
         <div class="flex justify-between items-start">
           <h2 class="text-xl font-medium text-gray-800">{{ project.title }}</h2>
-
           <!-- Statut -->
           <div class="flex items-center">
             <span [ngClass]="getStatusClass(project.status)" class="px-2.5 py-0.5 rounded-full text-xs font-medium">
@@ -81,7 +73,7 @@
                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
                     Voir les détails
                   </a>
-                  <a (click)="editProject(project, $event)"
+                  <a (click)="openEditModal(project, $event)"
                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
                     Modifier
                   </a>
@@ -127,7 +119,6 @@
       </div>
     </div>
   </div>
-
   <!-- Pagination -->
   <div *ngIf="totalPages > 1" class="flex items-center justify-center mt-8 space-x-2">
     <button (click)="prevPage()" [disabled]="currentPage === 1"
@@ -135,7 +126,6 @@
       class="px-3 py-1 rounded-md bg-white border border-gray-300 shadow-sm hover:bg-gray-50 focus:outline-none">
       Précédent
     </button>
-
     <div *ngFor="let page of [].constructor(totalPages); let i = index">
       <button (click)="goToPage(i + 1)"
         [ngClass]="{'bg-green-600 text-white': currentPage === i + 1, 'bg-white text-gray-700': currentPage !== i + 1}"
@@ -149,5 +139,26 @@
       class="px-3 py-1 rounded-md bg-white border border-gray-300 shadow-sm hover:bg-gray-50 focus:outline-none">
       Suivant
     </button>
+  </div>
+</div>
+<!-- Modal d'ajout de projet -->
+<div *ngIf="showAddModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+  <div class="bg-white rounded-lg shadow-lg w-full max-w-xl p-6">
+    <app-add-projet-modal 
+      (cancel)="closeAddModal()" 
+      (submit)="onAddProject($event)">
+    </app-add-projet-modal>
+  </div>
+</div>
+
+<!-- Modal de modification de projet (à implémenter similairement) -->
+<!-- Modal de modification de projet -->
+<div *ngIf="showEditModal && selectedProject" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+  <div class="bg-white rounded-lg shadow-lg w-full max-w-xl ">
+    <app-edit-projet-modal
+      [project]="selectedProject"
+      (cancel)="closeEditModal()"
+      (submit)="onEditProject($event)">
+    </app-edit-projet-modal>
   </div>
 </div>

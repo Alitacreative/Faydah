@@ -7,14 +7,18 @@ import { IonicModule } from '@ionic/angular';
 import { DahiraPageRoutingModule } from './dahira-routing.module';
 
 import { DahiraPage } from './dahira.page';
+import { AddDahiraModalComponent } from "./components/add-dahira-modal/add-dahira-modal.component";
+import { EditDahiraModalComponent } from "./components/edit-dahira-modal/edit-dahira-modal.component";
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    DahiraPageRoutingModule
-  ],
+    DahiraPageRoutingModule,
+    AddDahiraModalComponent,
+    EditDahiraModalComponent
+],
   declarations: [DahiraPage]
 })
 export class DahiraPageModule {}
