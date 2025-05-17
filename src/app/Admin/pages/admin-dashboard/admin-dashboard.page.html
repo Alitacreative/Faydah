@@ -29,7 +29,7 @@
     </div>
   </div>
 
-  <!-- Statistiques -->
+  <!-- Cards statistiques -->
   <div class="w-full">
     <app-stat-cards>
       
@@ -38,7 +38,7 @@
 
   <!-- Graphiques -->
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6 h-[400px]">
-    <div class="bg-white p-4 rounded shadow">
+    <div class="bg-white p-4 rounded-xl shadow-sm">
       <h2 class="text-lg font-semibold mb-2">Cotisations mensuelles</h2>
       <!-- <canvas id="monthlyChart" class="w-full h-64"></canvas> -->
       <div class="w-full ">
@@ -47,14 +47,14 @@
           [responsive]="chartOptions.responsive"></apx-chart>
       </div>
     </div>
-    <div class="bg-white p-4 rounded shadow">
+    <div class="bg-white p-4 rounded-xl shadow-sm">
       <h2 class="text-lg font-semibold mb-2">Avancement des projets</h2>
       <p>En cours de développement...</p>
     </div>
   </div>
 
   <!-- Répartition géographique -->
-  <div class="bg-white p-4 rounded shadow">
+  <div class="bg-white p-4 rounded-xl shadow-sm">
     <h2 class="text-lg font-semibold mb-2">Répartition géographique des utilisateurs</h2>
     <p>À intégrer avec Map ou données géographiques</p>
   </div>
