@@ -41,13 +41,14 @@ const routes: Routes = [
       //   loadChildren: () => import('../profile/profile.module').then(m => m.ProfilePageModule)
       // },
       {
+
         path: 'projets',
         loadChildren: () => import('../pages/projets/projets.module').then(m => m.ProjetsPageModule)
       },
-      // {
-      //   path: 'ressources',
-      //   loadChildren: () => import('../finances/finances.module').then( m => m.FinancesPageModule)
-      // },
+      {
+      path: 'resources',
+      loadChildren: () => import('../pages/resources/resources.module').then(m => m.ResourcesPageModule)
+      },
       // {
       //   path: 'tourisme',
       //   loadChildren: () => import('../profile/profile.module').then(m => m.ProfilePageModule)

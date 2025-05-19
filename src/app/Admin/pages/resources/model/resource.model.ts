@@ -7,4 +7,5 @@ export interface Resource {
   author: string;
   fileType?: 'image' | 'pdf' | 'video' | 'audio';
   fileUrl?: string;
+  
 }
