@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfettiService } from '../../services/confetti.service';
+import { ConfettiService } from '../resources/services/confetti.service';
 import { Router } from '@angular/router';
 import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 import { Dahira } from './models/dahira.model';

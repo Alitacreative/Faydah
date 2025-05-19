@@ -1,7 +1,7 @@
 import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
-import { UserService } from '../../services/utilisateur.service';
+import { UserService } from './services/utilisateur.service';
 import { Subscription } from 'rxjs';
-import { User } from '../../models/utilisateur.model';
+import { User } from './models/utilisateur.model';
 import { GoogleMapsLoaderService } from './google-maps.service';
 
 
