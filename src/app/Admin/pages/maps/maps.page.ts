@@ -83,7 +83,7 @@ export class MapsPage implements OnInit {
   }
 
   private loadUsers(): void {
-    this.userService.getAllUsers().subscribe(users => {
+    this.userService.getAllUsers().subscribe((users: User[]) => {
       // this.updateMarkers(users);
     });
   }
