@@ -1,0 +1,12 @@
+<div class="flex overflow-x-auto pb-2 space-x-2 border-b border-gray-200">
+  <button 
+    *ngFor="let category of categories"
+    class="py-2 px-4 text-sm rounded-full whitespace-nowrap"
+    [class.bg-green-100]="isSelected(category.id)"
+    [class.text-green-800]="isSelected(category.id)"
+    [class.bg-gray-100]="!isSelected(category.id)"
+    [class.text-gray-700]="!isSelected(category.id)"
+    (click)="selectCategory(category.id)">
+    {{ category.label }}
+  </button>
+</div>

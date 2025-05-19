@@ -1,17 +1,20 @@
-<div class="bg-white rounded-lg p-4 mb-4 relative" *ngIf="resource">
+<div class="bg-white rounded-lg shadow p-4 mb-4 relative" (click)="openResourceDetails(resource.id)">
   <div class="flex justify-between items-start">
-    <div>
-      <h3 class="text-lg font-medium truncate">{{ resource.title }}</h3>
-      <p class="text-gray-600 text-sm mt-2">{{ resource.description }}</p>
-      <p class="text-gray-500 text-xs mt-4">Ajouté le {{ resource.dateAdded }}</p>
+    <div class="flex-1">
+      <h3 class="text-base font-medium text-gray-900 truncate mb-1">{{ resource.title }}</h3>
+      <p class="text-sm text-gray-600 line-clamp-3">{{ resource.description }}</p>
     </div>
-    <div class="flex flex-col items-end">
-      <span class="px-3 py-1 rounded-full text-xs bg-green-100 text-green-800">
-        {{ resource.type }}
-      </span>
-      <button class="mt-2 text-gray-400">
-        <ion-icon name="ellipsis-horizontal"></ion-icon>
-      </button>
-    </div>
+    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 ml-2">
+      {{ resource.fileType }}
+    </span>
+  </div>
+
+  <div class="flex justify-between items-center mt-3">
+    <span class="text-xs text-gray-500">{{ formatDate(resource.dateAdded) }}</span>
+
+    <!-- Empêche le clic de se propager au div parent -->
+    <ion-button fill="clear" size="small" (click)="$event.stopPropagation()">
+      <ion-icon name="ellipsis-vertical" slot="icon-only"></ion-icon>
+    </ion-button>
   </div>
 </div>

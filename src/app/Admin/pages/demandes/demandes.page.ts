@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Demande } from './model/demandes.interface';
 import { Router } from '@angular/router';
-import { ConfettiService } from '../../services/confetti.service';
+import { ConfettiService } from '../resources/services/confetti.service';
 
 @Component({
   selector: 'app-demandes',

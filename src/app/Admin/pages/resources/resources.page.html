@@ -1,0 +1,52 @@
+<div class="flex flex-col h-full">
+  <!-- Titre et section de recherche spécifique -->
+  <div class="p-4 bg-white">
+    <h2 class="text-xl font-semibold text-gray-800 mb-4">Ressources</h2>
+    <div class="relative">
+      <input 
+        type="text" 
+        placeholder="Rechercher un projet" 
+        class="w-full py-2 px-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+        (input)="search($event)"
+      />
+      <div class="absolute right-0 top-0 h-full flex items-center mr-2">
+        <!-- Bouton d'ajout de ressource -->
+        <button 
+          class="bg-white p-2 rounded-full text-green-600 hover:bg-green-50 mr-4"
+          (click)="openAddResourceModal()"
+        >
+          <ion-icon name="person-add-outline" class="text-xl"></ion-icon>
+        </button>
+        
+        <!-- Bouton de filtre -->
+        <button class="bg-white p-2 rounded-full text-green-600 hover:bg-green-50">
+          <ion-icon name="funnel-outline" class="text-xl"></ion-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Tabs de catégories -->
+  <div class="flex overflow-x-auto py-2 px-3 bg-white border-b border-gray-200 whitespace-nowrap">
+    <ng-container *ngFor="let category of categories">
+      <button 
+        class="px-4 py-2 mx-1 rounded-md text-sm focus:outline-none"
+        [ngClass]="{
+          'bg-white text-gray-700': (selectedCategory$ | async) !== category,
+          'bg-green-100 text-green-700 font-medium': (selectedCategory$ | async) === category
+        }"
+        (click)="setCategory(category)"
+      >
+        {{ category }}
+      </button>
+    </ng-container>
+  </div>
+  
+  <!-- Liste des ressources -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-gray-100 overflow-y-auto">
+    <app-resource-card 
+      *ngFor="let resource of resources$ | async" 
+      [resource]="resource"
+    ></app-resource-card>
+  </div>
+</div>

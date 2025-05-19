@@ -1,0 +1,20 @@
+.modal-content {
+  border-radius: 8px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Style pour le bouton désactivé */
+button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Style pour l'élément de téléchargement de fichier */
+.file-upload {
+  transition: all 0.3s ease;
+}
+
+.file-upload:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}

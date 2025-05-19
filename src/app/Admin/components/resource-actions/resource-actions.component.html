@@ -1,0 +1,18 @@
+<div class="p-2">
+  <div class="grid grid-cols-1 gap-2">
+    <button class="flex items-center w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-100 rounded-md" (click)="viewDetails()">
+      <ion-icon name="eye-outline" class="mr-2"></ion-icon>
+      <span>Voir détails</span>
+    </button>
+    
+    <button class="flex items-center w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-100 rounded-md" (click)="editResource()">
+      <ion-icon name="create-outline" class="mr-2"></ion-icon>
+      <span>Modifier</span>
+    </button>
+    
+    <button class="flex items-center w-full px-4 py-2 text-left text-red-600 hover:bg-gray-100 rounded-md" (click)="deleteResource()">
+      <ion-icon name="trash-outline" class="mr-2"></ion-icon>
+      <span>Supprimer</span>
+    </button>
+  </div>
+</div>

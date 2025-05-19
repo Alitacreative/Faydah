@@ -42,13 +42,8 @@ const routes: Routes = [
     loadChildren: () => import('./features/bibliotheque/pages/detail-tafsir/detail-tafsir.module').then( m => m.DetailTafsirPageModule)
   },
   
-  {
-    path: 'ressources',
-    loadChildren: () => import('./Admin/pages/ressources/ressources.module').then( m => m.RessourcesPageModule)
-  }
-
-
-
+  
+  
  
 ];
 

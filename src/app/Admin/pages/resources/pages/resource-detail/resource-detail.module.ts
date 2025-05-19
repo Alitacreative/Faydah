@@ -4,14 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule, Routes } from '@angular/router';
 
-import { RessourcesPage } from './ressources.page';
-import { ResourceCardModule } from '../../components/resource-card/resource-card.module';
-import { AddResourceModalModule } from '../../components/add-resource-modal/add-resource-modal.module';
+import { ResourceDetailPage } from './resource-detail.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: RessourcesPage
+    component: ResourceDetailPage
   }
 ];
 
@@ -20,10 +18,8 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    ResourceCardModule,
-    AddResourceModalModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [RessourcesPage]
+  declarations: [ResourceDetailPage]
 })
-export class RessourcesPageModule {}
+export class ResourceDetailPageModule {}

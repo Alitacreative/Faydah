@@ -1,0 +1,18 @@
+:host {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.overflow-x-auto {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.overflow-x-auto::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari, Opera */
+}
+
+button {
+  transition: all 0.2s ease;
+  min-width: fit-content;
+}

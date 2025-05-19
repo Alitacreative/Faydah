@@ -1,0 +1,43 @@
+.resource-container {
+  height: calc(100% - 100px);
+  overflow-y: auto;
+}
+
+.category-tabs {
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.category-tabs::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Support pour les couleurs de catégorie */
+.category-tag {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.category-Zikrs {
+  background-color: #e5f6ff;
+  color: #0284c7;
+}
+
+.category-Livres {
+  background-color: #f0fdf4;
+  color: #22c55e;
+}
+
+.category-Conférences {
+  background-color: #f0f9ff;
+  color: #0ea5e9;
+}
+
+.category-Tafsirs {
+  background-color: #fff7ed;
+  color: #f97316;
+}

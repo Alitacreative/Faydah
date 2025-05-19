@@ -29,9 +29,13 @@ const routes: Routes = [
         loadChildren: () => import('../pages/dahira/dahira.module').then( m => m.DahiraPageModule)
       },
       {
-    path: 'ressources',
-    loadChildren: () => import('../pages/ressources/ressources.module').then(m => m.RessourcesPageModule)
-  },
+      path: 'resources',
+      loadChildren: () => import('../pages/resources/resources.module').then(m => m.ResourcesPageModule)
+      },
+       
+   
+
+
       // {
       //   path: 'projets',
       //   loadChildren: () => import('../profile/profile.module').then(m => m.ProfilePageModule)
