@@ -1,174 +1,243 @@
-import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
-import { UserService } from '../../services/utilisateur.service';
-import { Subscription } from 'rxjs';
-import { User } from '../../models/utilisateur.model';
-import { GoogleMapsLoaderService } from './google-maps.service';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { LoadingController } from '@ionic/angular';
+import * as L from 'leaflet';
+import 'leaflet.markercluster';
 
+interface MapItem {
+  name: string;
+  type: 'disciple' | 'dahira' | 'mouqadam';
+  lat: number;
+  lng: number;
+  country: string;
+  region: string;
+  department: string;
+  members?: number;
+  disciples?: number;
+}
 
 @Component({
   selector: 'app-maps',
   templateUrl: './maps.page.html',
   styleUrls: ['./maps.page.scss'],
-  standalone: false
+  standalone: false,
 })
 export class MapsPage implements OnInit {
-
-  @ViewChild('mapContainer', { static: true }) mapContainer!: ElementRef;
-  
-  private map: google.maps.Map | null = null;
-  private markers: google.maps.Marker[] = [];
-  private infoWindow: google.maps.InfoWindow | null = null;
-  
-  // Options de filtre
-  filters = {
-    role: '',
-    sexe: '',
-    dahira: '',
-    ageMin: 0,
-    ageMax: 100
+  @ViewChild('map', { static: true }) mapElement!: ElementRef;
+  private map: any;
+  private markers = L.markerClusterGroup();
+  public disciples: MapItem[] = [];
+  public dahiras: MapItem[] = [];
+  public mouqadams: MapItem[] = [];
+  public selectedFilter = 'all';
+  public searchText = '';
+  public selectedCountry = 'all';
+  public countries = [
+    { code: 'all', name: 'Tous les pays' },
+    { code: 'SN', name: 'Sénégal' },
+    { code: 'ML', name: 'Mali' },
+    { code: 'CI', name: 'Côte d\'Ivoire' },
+    { code: 'US', name: 'États-Unis' },
+    { code: 'FR', name: 'France' },
+    { code: 'UK', name: 'Royaume-Uni' },
+    { code: 'MA', name: 'Maroc' },
+    { code: 'NG', name: 'Nigeria' },
+  ];
+  public regions: { name: string }[] = [];
+  public selectedRegion = 'all';
+  public departments: { name: string }[] = [];
+  public selectedDepartment = 'all';
+  public stats = {
+    totalDisciples: 0,
+    totalDahiras: 0,
+    totalMouqadams: 0,
+    countriesCount: 0,
   };
-  
-  // Listes pour les sélections de filtre
-  roles: string[] = ['admin', 'moderateur', 'membre'];
-  sexes: string[] = ['homme', 'femme'];
-  dahiras: string[] = ['Touba', 'Tivaouane', 'Medina Baye'];
-  
-  // Filtre actif ou non
-  isFilterPanelOpen = false;
-  
-  // Pour gérer les souscriptions
-  private subscription = new Subscription();
 
-  constructor(
-    private userService: UserService,
-    private ngZone: NgZone,
-    private mapsLoader: GoogleMapsLoaderService
-  ) {}
+  constructor(private loadingController: LoadingController) {}
 
-  ngOnInit() {
-    this.mapsLoader.load().then(() => {
-      this.initMap(); // <- Appel sécurisé après chargement de l'API
-      // this.subscription.add(
-      //   this.userService.getFilteredUsers().subscribe(users => {
-      //     this.updateMarkers(users);
-      //   })
-      // );
-    }).catch(err => {
-      console.error('Erreur de chargement de Google Maps', err);
+  async ngOnInit() {
+    await this.presentLoading();
+    this.loadMockData();
+    this.initializeMap();
+    this.loadMapMarkers();
+    this.calculateStats();
+    this.loadingController.dismiss();
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Chargement de la carte...',
+      duration: 2000
     });
+    await loading.present();
   }
 
-  ngOnDestroy() {
-    // Nettoyer les souscriptions
-    this.subscription.unsubscribe();
-  }
-  
+  initializeMap() {
+    this.map = L.map(this.mapElement.nativeElement).setView([14.6937, -17.4441], 3);
 
-  private initMap(): void {
-    // Créer la carte Google Maps
-    const mapOptions: google.maps.MapOptions = {
-      center: { lat: 14.7645, lng: -17.3660 }, // Dakar, Sénégal
-      zoom: 12,
-      styles: [ /* Aucun style personnalisé pour conserver l'apparence par défaut */ ],
-      mapTypeControl: false,
-      streetViewControl: false,
-      fullscreenControl: true
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(this.map);
+
+    this.map.addLayer(this.markers);
+  }
+
+  loadMockData() {
+    this.disciples = [/* ... données disciples ... */];
+    this.dahiras = [/* ... données dahiras ... */];
+    this.mouqadams = [/* ... données mouqadams ... */];
+
+    const allItems = [...this.disciples, ...this.dahiras, ...this.mouqadams];
+    this.regions = [...new Set(allItems.map(item => item.region))].map(region => ({ name: region }));
+    this.departments = [...new Set(allItems.map(item => item.department))].map(dept => ({ name: dept }));
+  }
+
+  loadMapMarkers() {
+    this.markers.clearLayers();
+
+    const discipleIcon = L.icon({
+      iconUrl: 'assets/icons/disciple-marker.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34]
+    });
+
+    const dahiraIcon = L.icon({
+      iconUrl: 'assets/icons/dahira-marker.png',
+      iconSize: [30, 46],
+      iconAnchor: [15, 46],
+      popupAnchor: [1, -34]
+    });
+
+    const mouqadamIcon = L.icon({
+      iconUrl: 'assets/icons/mouqadam-marker.png',
+      iconSize: [35, 51],
+      iconAnchor: [17, 51],
+      popupAnchor: [1, -34]
+    });
+
+    let filteredItems: MapItem[] = [];
+
+    if (this.selectedFilter === 'all' || this.selectedFilter === 'disciples') {
+      filteredItems = [...filteredItems, ...this.disciples];
+    }
+    if (this.selectedFilter === 'all' || this.selectedFilter === 'dahiras') {
+      filteredItems = [...filteredItems, ...this.dahiras];
+    }
+    if (this.selectedFilter === 'all' || this.selectedFilter === 'mouqadams') {
+      filteredItems = [...filteredItems, ...this.mouqadams];
+    }
+
+    filteredItems = filteredItems.filter(item => {
+      let matches = true;
+      if (this.selectedCountry !== 'all') matches = matches && item.country === this.selectedCountry;
+      if (this.selectedRegion !== 'all') matches = matches && item.region === this.selectedRegion;
+      if (this.selectedDepartment !== 'all') matches = matches && item.department === this.selectedDepartment;
+      if (this.searchText) matches = matches && item.name.toLowerCase().includes(this.searchText.toLowerCase());
+      return matches;
+    });
+
+    filteredItems.forEach(item => {
+      let marker: L.Marker<any> | undefined;
+      let popupContent = '';
+
+      if (item.type === 'disciple') {
+        marker = L.marker([item.lat, item.lng], { icon: discipleIcon });
+        popupContent = `<h4>${item.name}</h4><p>Type: Disciple</p><p>Pays: ${this.getCountryName(item.country)}</p><p>Région: ${item.region}</p><p>Département: ${item.department}</p>`;
+      } else if (item.type === 'dahira') {
+        marker = L.marker([item.lat, item.lng], { icon: dahiraIcon });
+        popupContent = `<h4>${item.name}</h4><p>Type: Dahira</p><p>Membres: ${item.members}</p><p>Pays: ${this.getCountryName(item.country)}</p><p>Région: ${item.region}</p><p>Département: ${item.department}</p>`;
+      } else if (item.type === 'mouqadam') {
+        marker = L.marker([item.lat, item.lng], { icon: mouqadamIcon });
+        popupContent = `<h4>${item.name}</h4><p>Type: Mouqadam</p><p>Disciples: ${item.disciples}</p><p>Pays: ${this.getCountryName(item.country)}</p><p>Région: ${item.region}</p><p>Département: ${item.department}</p>`;
+      }
+
+      if (marker) {
+        marker.bindPopup(popupContent);
+        this.markers.addLayer(marker);
+      }
+    });
+
+    if (filteredItems.length > 0) {
+      const group = L.featureGroup(filteredItems.map(item => L.marker([item.lat, item.lng])));
+      this.map.fitBounds(group.getBounds(), { padding: [50, 50] });
+    }
+  }
+
+  getCountryName(code: string): string {
+    const country = this.countries.find(c => c.code === code);
+    return country ? country.name : code;
+  }
+
+  filterChanged() {
+    this.loadMapMarkers();
+  }
+
+  searchChanged() {
+    this.loadMapMarkers();
+  }
+
+  countryChanged() {
+    this.selectedRegion = 'all';
+    this.selectedDepartment = 'all';
+    this.loadMapMarkers();
+  }
+
+  regionChanged() {
+    this.selectedDepartment = 'all';
+    this.loadMapMarkers();
+  }
+
+  departmentChanged() {
+    this.loadMapMarkers();
+  }
+
+  calculateStats() {
+    const allItems = [...this.disciples, ...this.dahiras, ...this.mouqadams];
+    const uniqueCountries = new Set(allItems.map(item => item.country));
+
+    this.stats = {
+      totalDisciples: this.disciples.length,
+      totalDahiras: this.dahiras.length,
+      totalMouqadams: this.mouqadams.length,
+      countriesCount: uniqueCountries.size
     };
-    
-    this.map = new google.maps.Map(this.mapContainer.nativeElement, mapOptions);
-    this.infoWindow = new google.maps.InfoWindow();
-    
-    // Chargement initial des utilisateurs
-    this.loadUsers();
   }
 
-  private loadUsers(): void {
-    this.userService.getAllUsers().subscribe(users => {
-      // this.updateMarkers(users);
+  resetFilters() {
+    this.selectedFilter = 'all';
+    this.selectedCountry = 'all';
+    this.selectedRegion = 'all';
+    this.selectedDepartment = 'all';
+    this.searchText = '';
+    this.loadMapMarkers();
+  }
+
+  exportData() {
+    // Implémentation simple d'export CSV par exemple
+    const allItems = [...this.disciples, ...this.dahiras, ...this.mouqadams];
+    let csvContent = 'data:text/csv;charset=utf-8,';
+    csvContent += 'Nom,Type,Pays,Région,Département,Latitude,Longitude\n';
+
+    allItems.forEach(item => {
+      const row = [
+        `"${item.name}"`,
+        item.type,
+        `"${this.getCountryName(item.country)}"`,
+        `"${item.region}"`,
+        `"${item.department}"`,
+        item.lat,
+        item.lng
+      ].join(',');
+      csvContent += row + '\n';
     });
-  }
 
-  // private updateMarkers(users: User[]): void {
-  //   // Supprimer les marqueurs existants
-  //   this.clearMarkers();
-    
-  //   if (!this.map) return;
-    
-  //   // Ajouter de nouveaux marqueurs
-  //   const bounds = new google.maps.LatLngBounds();
-    
-  //   users.forEach(user => {
-  //     const position = new google.maps.LatLng(user.position.lat, user.position.lng);
-  //     bounds.extend(position);
-      
-  //     const marker = new google.maps.Marker({
-  //       position: position,
-  //       map: this.map,
-  //       title: `${user.prenom} ${user.nom}`,
-  //       animation: google.maps.Animation.DROP
-  //     });
-      
-  //     // Contenu de l'infoWindow
-  //     const contentString = `
-  //       <div class="p-2">
-  //         <h3 class="font-bold text-lg">${user.prenom} ${user.nom}</h3>
-  //         <p><strong>Âge:</strong> ${user.age}</p>
-  //         <p><strong>Sexe:</strong> ${user.sexe}</p>
-  //         <p><strong>Rôle:</strong> ${user.role}</p>
-  //         <p><strong>Dahira:</strong> ${user.dahira}</p>
-  //       </div>
-  //     `;
-      
-  //     // Ajouter un écouteur d'événement pour l'affichage de l'infoWindow
-  //     marker.addListener('click', () => {
-  //       // Utiliser NgZone pour s'assurer que Angular détecte les changements
-  //       this.ngZone.run(() => {
-  //         if (this.infoWindow && this.map) {
-  //           this.infoWindow.setContent(contentString);
-  //           this.infoWindow.open(this.map, marker);
-  //         }
-  //       });
-  //     });
-      
-  //     this.markers.push(marker);
-  //   });
-    
-  //   // Ajuster la vue aux marqueurs
-  //   if (users.length > 0 && this.map) {
-  //     this.map.fitBounds(bounds);
-  //     // Zoom out un peu si on n'a qu'un seul marqueur
-  //     if (users.length === 1) {
-  //       google.maps.event.addListenerOnce(this.map, 'bounds_changed', () => {
-  //         if (this.map) this.map.setZoom(Math.min(15, this.map.getZoom() || 12));
-  //       });
-  //     }
-  //   }
-  // }
-  
-  private clearMarkers(): void {
-    // Supprimer tous les marqueurs de la carte
-    this.markers.forEach(marker => {
-      marker.setMap(null);
-    });
-    this.markers = [];
-  }
-
-  toggleFilterPanel(): void {
-    this.isFilterPanelOpen = !this.isFilterPanelOpen;
-  }
-
-  applyFilters(): void {
-    this.userService.applyFilters(this.filters);
-  }
-
-  resetFilters(): void {
-    this.filters = {
-      role: '',
-      sexe: '',
-      dahira: '',
-      ageMin: 0,
-      ageMax: 100
-    };
-    this.applyFilters();
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', 'cartographie_disciples.csv');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 }

@@ -1,10 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
 import { IonicModule } from '@ionic/angular';
-
-import { MapsPageRoutingModule } from './maps-routing.module';
+import { RouterModule } from '@angular/router';
 
 import { MapsPage } from './maps.page';
 
@@ -13,7 +11,12 @@ import { MapsPage } from './maps.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    MapsPageRoutingModule
+    RouterModule.forChild([
+      {
+        path: '',
+        component: MapsPage
+      }
+    ])
   ],
   declarations: [MapsPage]
 })
