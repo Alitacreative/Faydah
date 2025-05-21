@@ -23,11 +23,15 @@ interface MapItem {
 })
 export class MapsPage implements OnInit {
   @ViewChild('map', { static: true }) mapElement!: ElementRef;
-  private map: any;
+
+  private map!: L.Map;
   private markers = L.markerClusterGroup();
+  private mapInitialized = false;
+
   public disciples: MapItem[] = [];
   public dahiras: MapItem[] = [];
   public mouqadams: MapItem[] = [];
+
   public selectedFilter = 'all';
   public searchText = '';
   public selectedCountry = 'all';
@@ -46,6 +50,7 @@ export class MapsPage implements OnInit {
   public selectedRegion = 'all';
   public departments: { name: string }[] = [];
   public selectedDepartment = 'all';
+
   public stats = {
     totalDisciples: 0,
     totalDahiras: 0,
@@ -59,33 +64,46 @@ export class MapsPage implements OnInit {
     await this.presentLoading();
     this.loadMockData();
     this.initializeMap();
-    this.loadMapMarkers();
     this.calculateStats();
+    this.loadMapMarkers();
     this.loadingController.dismiss();
   }
 
   async presentLoading() {
     const loading = await this.loadingController.create({
       message: 'Chargement de la carte...',
-      duration: 2000
+      duration: 1500,
     });
     await loading.present();
   }
 
   initializeMap() {
-    this.map = L.map(this.mapElement.nativeElement).setView([14.6937, -17.4441], 3);
+    if (this.mapInitialized) return;
+
+    this.map = L.map(this.mapElement.nativeElement, {
+      center: [14.6937, -17.4441],
+      zoom: 3,
+      zoomControl: true
+    });
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap contributors'
     }).addTo(this.map);
 
     this.map.addLayer(this.markers);
+    this.mapInitialized = true;
   }
 
   loadMockData() {
-    this.disciples = [/* ... données disciples ... */];
-    this.dahiras = [/* ... données dahiras ... */];
-    this.mouqadams = [/* ... données mouqadams ... */];
+    this.disciples = [
+      { name: 'Ali Ndiaye', type: 'disciple', lat: 14.6928, lng: -17.4467, country: 'SN', region: 'Dakar', department: 'Pikine' }
+    ];
+    this.dahiras = [
+      { name: 'Dahira Touba Marseille', type: 'dahira', lat: 43.2965, lng: 5.3698, country: 'FR', region: 'PACA', department: 'Bouches-du-Rhône', members: 120 }
+    ];
+    this.mouqadams = [
+      { name: 'Serigne Babacar Diop', type: 'mouqadam', lat: 6.5244, lng: 3.3792, country: 'NG', region: 'Lagos', department: 'Ikeja', disciples: 50 }
+    ];
 
     const allItems = [...this.disciples, ...this.dahiras, ...this.mouqadams];
     this.regions = [...new Set(allItems.map(item => item.region))].map(region => ({ name: region }));
@@ -118,49 +136,51 @@ export class MapsPage implements OnInit {
 
     let filteredItems: MapItem[] = [];
 
-    if (this.selectedFilter === 'all' || this.selectedFilter === 'disciples') {
+    if (this.selectedFilter === 'all' || this.selectedFilter === 'disciple') {
       filteredItems = [...filteredItems, ...this.disciples];
     }
-    if (this.selectedFilter === 'all' || this.selectedFilter === 'dahiras') {
+    if (this.selectedFilter === 'all' || this.selectedFilter === 'dahira') {
       filteredItems = [...filteredItems, ...this.dahiras];
     }
-    if (this.selectedFilter === 'all' || this.selectedFilter === 'mouqadams') {
+    if (this.selectedFilter === 'all' || this.selectedFilter === 'mouqadam') {
       filteredItems = [...filteredItems, ...this.mouqadams];
     }
 
     filteredItems = filteredItems.filter(item => {
-      let matches = true;
-      if (this.selectedCountry !== 'all') matches = matches && item.country === this.selectedCountry;
-      if (this.selectedRegion !== 'all') matches = matches && item.region === this.selectedRegion;
-      if (this.selectedDepartment !== 'all') matches = matches && item.department === this.selectedDepartment;
-      if (this.searchText) matches = matches && item.name.toLowerCase().includes(this.searchText.toLowerCase());
-      return matches;
+      let match = true;
+      if (this.selectedCountry !== 'all') match = match && item.country === this.selectedCountry;
+      if (this.selectedRegion !== 'all') match = match && item.region === this.selectedRegion;
+      if (this.selectedDepartment !== 'all') match = match && item.department === this.selectedDepartment;
+      if (this.searchText) match = match && item.name.toLowerCase().includes(this.searchText.toLowerCase());
+      return match;
     });
+
+    const bounds: L.LatLngExpression[] = [];
 
     filteredItems.forEach(item => {
       let marker: L.Marker<any> | undefined;
-      let popupContent = '';
+      let popupContent = `<h4>${item.name}</h4><p>Type: ${item.type}</p><p>Pays: ${this.getCountryName(item.country)}</p><p>Région: ${item.region}</p><p>Département: ${item.department}</p>`;
 
       if (item.type === 'disciple') {
         marker = L.marker([item.lat, item.lng], { icon: discipleIcon });
-        popupContent = `<h4>${item.name}</h4><p>Type: Disciple</p><p>Pays: ${this.getCountryName(item.country)}</p><p>Région: ${item.region}</p><p>Département: ${item.department}</p>`;
       } else if (item.type === 'dahira') {
+        popupContent += `<p>Membres: ${item.members ?? 0}</p>`;
         marker = L.marker([item.lat, item.lng], { icon: dahiraIcon });
-        popupContent = `<h4>${item.name}</h4><p>Type: Dahira</p><p>Membres: ${item.members}</p><p>Pays: ${this.getCountryName(item.country)}</p><p>Région: ${item.region}</p><p>Département: ${item.department}</p>`;
       } else if (item.type === 'mouqadam') {
+        popupContent += `<p>Disciples: ${item.disciples ?? 0}</p>`;
         marker = L.marker([item.lat, item.lng], { icon: mouqadamIcon });
-        popupContent = `<h4>${item.name}</h4><p>Type: Mouqadam</p><p>Disciples: ${item.disciples}</p><p>Pays: ${this.getCountryName(item.country)}</p><p>Région: ${item.region}</p><p>Département: ${item.department}</p>`;
       }
 
       if (marker) {
         marker.bindPopup(popupContent);
         this.markers.addLayer(marker);
+        bounds.push([item.lat, item.lng]);
       }
     });
 
-    if (filteredItems.length > 0) {
-      const group = L.featureGroup(filteredItems.map(item => L.marker([item.lat, item.lng])));
-      this.map.fitBounds(group.getBounds(), { padding: [50, 50] });
+    if (bounds.length > 0) {
+      const latLngBounds = L.latLngBounds(bounds);
+      this.map.fitBounds(latLngBounds, { padding: [50, 50] });
     }
   }
 
@@ -200,7 +220,7 @@ export class MapsPage implements OnInit {
       totalDisciples: this.disciples.length,
       totalDahiras: this.dahiras.length,
       totalMouqadams: this.mouqadams.length,
-      countriesCount: uniqueCountries.size
+      countriesCount: uniqueCountries.size,
     };
   }
 
@@ -214,30 +234,23 @@ export class MapsPage implements OnInit {
   }
 
   exportData() {
-    // Implémentation simple d'export CSV par exemple
     const allItems = [...this.disciples, ...this.dahiras, ...this.mouqadams];
-    let csvContent = 'data:text/csv;charset=utf-8,';
-    csvContent += 'Nom,Type,Pays,Région,Département,Latitude,Longitude\n';
+    let csvContent = 'Nom,Type,Pays,Région,Département,Latitude,Longitude\n';
 
     allItems.forEach(item => {
-      const row = [
-        `"${item.name}"`,
-        item.type,
-        `"${this.getCountryName(item.country)}"`,
-        `"${item.region}"`,
-        `"${item.department}"`,
-        item.lat,
-        item.lng
-      ].join(',');
-      csvContent += row + '\n';
+      csvContent += `"${item.name}",${item.type},"${item.country}","${item.region}","${item.department}",${item.lat},${item.lng}\n`;
     });
 
-    const encodedUri = encodeURI(csvContent);
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+
     const link = document.createElement('a');
-    link.setAttribute('href', encodedUri);
-    link.setAttribute('download', 'cartographie_disciples.csv');
+    link.setAttribute('href', url);
+    link.setAttribute('download', 'donnees_disciples.csv');
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+
+    URL.revokeObjectURL(url);
   }
 }

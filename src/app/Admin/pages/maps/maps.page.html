@@ -1,120 +1,123 @@
+<!-- En-tête -->
+<div class="page-header">
+  <h1>Cartographie du Faydah par Pays</h1>
+  <p>Visualisez la répartition des disciples, dahiras et mouqadams à travers le monde</p>
+</div>
 
-  <div class="page-header">
-    <h1>Cartographie des Disciples</h1>
-    <p>Visualisez la répartition des disciples, dahiras et mouqadams à travers le monde</p>
-  </div>
-
-  <div class="stats-container">
-    <div class="stat-card">
-      <ion-icon name="people-outline"></ion-icon>
-      <div class="stat-details">
-        <span class="stat-value">{{ stats.totalDisciples }}</span>
-        <span class="stat-label">Disciples</span>
-      </div>
-    </div>
-    <div class="stat-card">
-      <ion-icon name="business-outline"></ion-icon>
-      <div class="stat-details">
-        <span class="stat-value">{{ stats.totalDahiras }}</span>
-        <span class="stat-label">Dahiras</span>
-      </div>
-    </div>
-    <div class="stat-card">
-      <ion-icon name="star-outline"></ion-icon>
-      <div class="stat-details">
-        <span class="stat-value">{{ stats.totalMouqadams }}</span>
-        <span class="stat-label">Mouqadams</span>
-      </div>
-    </div>
-    <div class="stat-card">
-      <ion-icon name="globe-outline"></ion-icon>
-      <div class="stat-details">
-        <span class="stat-value">{{ stats.countriesCount }}</span>
-        <span class="stat-label">Pays</span>
-      </div>
+<!-- Statistiques -->
+<div class="stats-container">
+  <div class="stat-card">
+    <ion-icon name="people-outline"></ion-icon>
+    <div class="stat-details">
+      <span class="stat-value">{{ stats.totalDisciples }}</span>
+      <span class="stat-label">Disciples</span>
     </div>
   </div>
+  <div class="stat-card">
+    <ion-icon name="business-outline"></ion-icon>
+    <div class="stat-details">
+      <span class="stat-value">{{ stats.totalDahiras }}</span>
+      <span class="stat-label">Dahiras</span>
+    </div>
+  </div>
+  <div class="stat-card">
+    <ion-icon name="star-outline"></ion-icon>
+    <div class="stat-details">
+      <span class="stat-value">{{ stats.totalMouqadams }}</span>
+      <span class="stat-label">Mouqadams</span>
+    </div>
+  </div>
+  <div class="stat-card">
+    <ion-icon name="globe-outline"></ion-icon>
+    <div class="stat-details">
+      <span class="stat-value">{{ stats.countriesCount }}</span>
+      <span class="stat-label">Pays</span>
+    </div>
+  </div>
+</div>
 
-  <div class="filters-container">
-    <div class="filters-row">
-      <div class="filter-group">
-        <ion-label>Type</ion-label>
-        <ion-select [(ngModel)]="selectedFilter" (ionChange)="filterChanged()">
-          <ion-select-option value="all">Tous</ion-select-option>
-          <ion-select-option value="disciples">Disciples</ion-select-option>
-          <ion-select-option value="dahiras">Dahiras</ion-select-option>
-          <ion-select-option value="mouqadams">Mouqadams</ion-select-option>
-        </ion-select>
-      </div>
-
-      <div class="filter-group">
-        <ion-label>Pays</ion-label>
-        <ion-select [(ngModel)]="selectedCountry" (ionChange)="countryChanged()">
-          <ion-select-option *ngFor="let country of countries" [value]="country.code">
-            {{ country.name }}
-          </ion-select-option>
-        </ion-select>
-      </div>
-
-      <div class="filter-group">
-        <ion-label>Région</ion-label>
-        <ion-select [(ngModel)]="selectedRegion" (ionChange)="regionChanged()">
-          <ion-select-option value="all">Toutes les régions</ion-select-option>
-          <ion-select-option *ngFor="let region of regions" [value]="region.name">
-            {{ region.name }}
-          </ion-select-option>
-        </ion-select>
-      </div>
-
-      <div class="filter-group">
-        <ion-label>Département</ion-label>
-        <ion-select [(ngModel)]="selectedDepartment" (ionChange)="departmentChanged()">
-          <ion-select-option value="all">Tous les départements</ion-select-option>
-          <ion-select-option *ngFor="let dept of departments" [value]="dept.name">
-            {{ dept.name }}
-          </ion-select-option>
-        </ion-select>
-      </div>
+<!-- Filtres -->
+<div class="filters-container">
+  <div class="filters-row">
+    <div class="filter-group">
+      <ion-label>Type</ion-label>
+      <ion-select [(ngModel)]="selectedFilter" (ionChange)="filterChanged()">
+        <ion-select-option value="all">Tous</ion-select-option>
+        <ion-select-option value="disciples">Disciples</ion-select-option>
+        <ion-select-option value="dahiras">Dahiras</ion-select-option>
+        <ion-select-option value="mouqadams">Mouqadams</ion-select-option>
+      </ion-select>
     </div>
 
-    <div class="filters-row search-row">
-      <ion-searchbar
-        [(ngModel)]="searchText"
-        (ionInput)="searchChanged()"
-        placeholder="Rechercher un disciple, dahira ou mouqadam"
-        debounce="300"
-      >
-      </ion-searchbar>
+    <div class="filter-group">
+      <ion-label>Pays</ion-label>
+      <ion-select [(ngModel)]="selectedCountry" (ionChange)="countryChanged()">
+        <ion-select-option *ngFor="let country of countries" [value]="country.code">
+          {{ country.name }}
+        </ion-select-option>
+      </ion-select>
+    </div>
 
-      <div class="action-buttons">
-        <ion-button (click)="resetFilters()" fill="outline" size="small">
-          <ion-icon name="refresh-outline" slot="start"></ion-icon>
-          Réinitialiser
-        </ion-button>
-        <ion-button (click)="exportData()" fill="solid" color="primary" size="small">
-          <ion-icon name="download-outline" slot="start"></ion-icon>
-          Exporter
-        </ion-button>
-      </div>
+    <div class="filter-group">
+      <ion-label>Région</ion-label>
+      <ion-select [(ngModel)]="selectedRegion" (ionChange)="regionChanged()">
+        <ion-select-option value="all">Toutes les régions</ion-select-option>
+        <ion-select-option *ngFor="let region of regions" [value]="region.name">
+          {{ region.name }}
+        </ion-select-option>
+      </ion-select>
+    </div>
+
+    <div class="filter-group">
+      <ion-label>Département</ion-label>
+      <ion-select [(ngModel)]="selectedDepartment" (ionChange)="departmentChanged()">
+        <ion-select-option value="all">Tous les départements</ion-select-option>
+        <ion-select-option *ngFor="let dept of departments" [value]="dept.name">
+          {{ dept.name }}
+        </ion-select-option>
+      </ion-select>
     </div>
   </div>
 
-  <div class="map-container">
-    <div #map id="map" style="height: 500px; width: 100%;"></div>
-  </div>
+  <div class="filters-row search-row">
+    <ion-searchbar
+      [(ngModel)]="searchText"
+      (ionInput)="searchChanged()"
+      placeholder="Rechercher un disciple, dahira ou mouqadam"
+      debounce="300"
+    >
+    </ion-searchbar>
 
-  <div class="legend">
-    <div class="legend-item">
-      <div class="legend-marker disciple-marker"></div>
-      <span>Disciples</span>
-    </div>
-    <div class="legend-item">
-      <div class="legend-marker dahira-marker"></div>
-      <span>Dahiras</span>
-    </div>
-    <div class="legend-item">
-      <div class="legend-marker mouqadam-marker"></div>
-      <span>Mouqadams</span>
+    <div class="action-buttons">
+      <ion-button (click)="resetFilters()" fill="outline" color="success" size="small">
+        <ion-icon name="refresh-outline" slot="start"></ion-icon>
+        Réinitialiser
+      </ion-button>
+      <ion-button (click)="exportData()" fill="solid" color="success" size="small">
+        <ion-icon name="download-outline" slot="start"></ion-icon>
+        Exporter
+      </ion-button>
     </div>
   </div>
+</div>
 
+<!-- Carte -->
+<div class="map-container">
+  <div #map id="map" style="height: 500px; width: 100%;"></div>
+</div>
+
+<!-- Légende -->
+<div class="legend">
+  <div class="legend-item">
+    <div class="legend-marker disciple-marker"></div>
+    <span>Disciples</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-marker dahira-marker"></div>
+    <span>Dahiras</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-marker mouqadam-marker"></div>
+    <span>Mouqadams</span>
+  </div>
+</div>
