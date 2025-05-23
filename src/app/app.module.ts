@@ -17,6 +17,8 @@ import { IonicStorageModule } from '@ionic/storage-angular';
 import { provideHttpClient } from '@angular/common/http';
 import { TabsComponent } from "./features/tabs/components/tabs.component";
 import { FormsModule } from '@angular/forms';
+//****Fatou mod**** module pour utilisation des api
+import { OAuthModule } from 'angular-oauth2-oidc';
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,6 +30,12 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
     StoreModule.forRoot({ theme: themeReducer }),
     IonicStorageModule.forRoot(), // Ajouté depuis la version locale
+    OAuthModule.forRoot({
+      resourceServer: {
+        allowedUrls: [], // ton API protégée
+        sendAccessToken: true
+      }
+    })
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

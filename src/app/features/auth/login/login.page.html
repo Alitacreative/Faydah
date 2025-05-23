@@ -1,6 +1,5 @@
 <ion-content class="login-page">
-  <div class="background-image"></div>
-
+  <div class="background-image">
   <div class="content-wrapper">
     <img src="assets/images/faydah-logo.png" alt="Faydah" class="logo" />
 
@@ -13,15 +12,14 @@
       <ion-label position="floating" class="input-label">Mot de passe</ion-label>
       <ion-input [(ngModel)]="password" class="input-text" type="password"></ion-input>
     </ion-item>
-
     <div class="submit-button" (click)="login()">
       <ion-icon name="arrow-forward-outline"></ion-icon>
     </div>
-
     <div class="register-text">
       <p>Pas encore inscrit ?</p>
       <!-- Remplace ion-router-link par ion-button avec routerLink -->
       <ion-button routerLink="/register" class="register-link" fill="clear">Crée un compte ici</ion-button>
     </div>
+  </div>
   </div>
 </ion-content>

@@ -57,15 +57,15 @@
   
   ion-input {
     --background: transparent !important;  /* Force background transparency */
-    --color: white; /* Text color */
+   // --color: white; /* Text color */
     --padding-start: 0; /* Remove padding from input */
     --padding-end: 0;
-    color: white;
+    //color: white;
   }
   
   ion-input::part(native-input) {
     background-color: transparent !important; /* Force the input to have no background */
-    color: white !important; /* Ensure the text is white */
+    //color: white !important; /* Ensure the text is white */
     caret-color: white;
     border: none;
     box-shadow: none;
@@ -74,22 +74,22 @@
   /* Forcing the background transparency on the input fields explicitly */
   ion-item {
     --background: transparent;
-    --color: white;
+   // --color: white;
   }
   
   ion-item ion-input {
     --background: transparent !important;
-    --color: white;
+   // --color: white;
     border: none; /* Remove borders */
-    background: transparent !important;
-    color: white !important;
+    
+   // color: white !important;
   }
   
   /* Apply specific styles for the telephone and ville fields */
   ion-item:nth-child(3) ion-input,
   ion-item:nth-child(4) ion-input {
     --background: transparent !important;
-    --color: white;
+   // --color: white;
   }
   
   input::-webkit-input-placeholder,
@@ -107,7 +107,7 @@
   }
   
   ion-button {
-    --color: white;
+    --color: #;
     --background-hover: #1b4b25;
     font-size: 24px;
   }
