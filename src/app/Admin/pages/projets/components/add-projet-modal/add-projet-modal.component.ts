@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { Project } from '../../models/projet.model';
@@ -12,10 +12,12 @@ import { Project } from '../../models/projet.model';
 })
 export class AddProjetModalComponent  implements OnInit {
   projectForm!: FormGroup;
+  
+  @Output() cancel = new EventEmitter<void>();
+  @Output() submit = new EventEmitter<Project>();
 
   constructor(
-    private fb: FormBuilder,
-    private modalController: ModalController
+    private fb: FormBuilder
   ) { }
 
   ngOnInit() {
@@ -34,7 +36,7 @@ export class AddProjetModalComponent  implements OnInit {
       progress: [0, [Validators.required, Validators.min(0), Validators.max(100)]],
       dueDate: [this.formatDateForInput(defaultDueDate), [Validators.required]]
     });
-
+    
     // Mise à jour automatique de la progression en fonction du statut
     this.projectForm.get('status')?.valueChanges.subscribe(status => {
       if (status === 'termine') {
@@ -66,9 +68,7 @@ export class AddProjetModalComponent  implements OnInit {
         contributors: []
       };
       
-      this.modalController.dismiss({
-        project: project
-      });
+      this.submit.emit(project);
     } else {
       // Marquer tous les champs comme touchés pour afficher les erreurs
       Object.keys(this.projectForm.controls).forEach(key => {
@@ -78,7 +78,8 @@ export class AddProjetModalComponent  implements OnInit {
     }
   }
 
-  cancel() {
-    this.modalController.dismiss();
+  onCancel() {
+    this.cancel.emit();
   }
 }
+

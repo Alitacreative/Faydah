@@ -1,0 +1,25 @@
+
+/* Assurer que la carte prend tout l'espace disponible */
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+  }
+  
+  /* S'assurer que le conteneur de carte prend tout l'espace disponible */
+  .map-container {
+    height: 100%;
+    width: 100%;
+  }
+  
+  /* S'assurer que les fenêtres d'info ont un style cohérent */
+  .gm-style .gm-style-iw-c {
+    padding: 12px;
+    border-radius: 8px;
+  }
+  
+  /* Quelques ajustements pour les fenêtres d'info */
+  .gm-style .gm-style-iw-d {
+    overflow: hidden !important;
+  }

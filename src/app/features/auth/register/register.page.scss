@@ -1,125 +1,41 @@
-.green-background {
-    --background: #215a2e;
-    background-color: #215a2e;
-    color: white;
-    padding: 16px;
-  }
-  
-  .logo-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 40px;
-  }
-  
-  .logo {
-    height: 60px;
-  }
-  
-  .title {
-    text-align: center;
-    font-size: 24px;
-    margin: 20px 0;
-    font-weight: bold;
-    color: white;
-  }
-  
-  .gender-segment {
-    display: flex;
-    justify-content: center;
-    margin: 20px 0;
-  }
-  
-  ion-segment {
-    --background: #1e4620;
-    --color: white;
-    --color-checked: #ffffff;
-  }
-  
-  ion-segment-button {
-    --color-checked: #ffffff;
-    --background-checked: #2e7d32;
-    color: white;
-  }
-  
-  ion-list {
-    background: transparent;
-  }
-  
-  ion-item {
-    --background: transparent;
-    --color: white;
-    border-bottom: 1px solid white;
-  }
-  
-  ion-label {
-    color: white;
-  }
-  
-  ion-input {
-    --background: transparent !important;  /* Force background transparency */
-    --color: white; /* Text color */
-    --padding-start: 0; /* Remove padding from input */
-    --padding-end: 0;
-    color: white;
-  }
-  
-  ion-input::part(native-input) {
-    background-color: transparent !important; /* Force the input to have no background */
-    color: white !important; /* Ensure the text is white */
-    caret-color: white;
-    border: none;
-    box-shadow: none;
-  }
-  
-  /* Forcing the background transparency on the input fields explicitly */
-  ion-item {
-    --background: transparent;
-    --color: white;
-  }
-  
-  ion-item ion-input {
-    --background: transparent !important;
-    --color: white;
-    border: none; /* Remove borders */
-    background: transparent !important;
-    color: white !important;
-  }
-  
-  /* Apply specific styles for the telephone and ville fields */
-  ion-item:nth-child(3) ion-input,
-  ion-item:nth-child(4) ion-input {
-    --background: transparent !important;
-    --color: white;
-  }
-  
-  input::-webkit-input-placeholder,
-  input::-moz-placeholder,
-  input:-ms-input-placeholder,
-  input::placeholder {
-    color: #dddddd; /* Light gray for the placeholder text */
-    opacity: 1;
-  }
-  
-  .submit-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 24px;
-  }
-  
-  ion-button {
-    --color: white;
-    --background-hover: #1b4b25;
-    font-size: 24px;
-  }
-  
-  ion-icon {
-    color: white;
-  }
-  /* Supprimer la bordure bleue au focus */
-ion-input:focus,
-ion-item:focus-within {
-  outline: none !important; /* Enlève l'encadrement bleu */
-  box-shadow: none !important; /* Enlève l'ombre */
-}
+    :host {
+      --color-primary-green: #215a2e;
+      --color-dark-green: #1e4620;
+      --color-light-green: #2e7d32;
+    }
+    
+    .bg-primary-green {
+      background-color: var(--color-primary-green);
+    }
+    
+    .bg-dark-green {
+      background-color: var(--color-dark-green);
+    }
+    
+    .bg-light-green {
+      background-color: var(--color-light-green);
+    }
+    
+    .border-light-green {
+      border-color: var(--color-light-green);
+    }
+    
+    .focus\\:border-light-green:focus {
+      border-color: var(--color-light-green);
+    }
+    
+    .hover\\:bg-light-green:hover {
+      background-color: var(--color-light-green);
+    }
+    
+    .hover\\:bg-dark-green:hover {
+      background-color: var(--color-dark-green);
+    }
+    
+    .focus\\:ring-light-green:focus {
+      --tw-ring-color: var(--color-light-green);
+    }
 
-  
+    .date-input::-webkit-calendar-picker-indicator {
+      filter: invert(1);
+    }

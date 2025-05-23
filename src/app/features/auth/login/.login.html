@@ -1,0 +1,279 @@
+<div class="min-h-screen bg-cover bg-center md:bg-top text-white font-sans flex items-center justify-center p-4" style="background-image: url('/assets/images/background.jpg');">
+  <!-- Overlay avec flou -->
+  <div class="absolute inset-0 backdrop-blur-[1px] bg-black/80"></div>
+  
+  <!-- Contenu principal pour desktop -->
+  <div class="hidden md:block relative z-10 w-full max-w-md">
+    <!-- Carte avec fond semi-transparent -->
+    <div class="bg-black/50 rounded-2xl border border-none p-8 shadow-2xl">
+      <!-- Logo - version épurée -->
+      <div class="text-center mb-10">
+        <h1 class="text-4xl text-primary font-bold tracking-tight font-serif">faydah</h1>
+        <p class="text-gray-400 mt-2">Accès à votre espace</p>
+      </div>
+
+      <!-- Formulaire -->
+      <form class="space-y-6">
+        <!-- Champ Email -->
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-100 mb-1">Identifiant</label>
+          <div class="relative">
+            <input id="email" type="email" [(ngModel)]="email"
+              class="bg-transparent w-full text-white placeholder-gray-400 border-0 border-b border-primary/50 pb-2 focus:outline-none focus:ring-0 focus:border-primary transition-colors"
+              placeholder="email@exemple.com" />
+            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Champ Mot de passe -->
+        <div>
+          <label for="password" class="block text-sm font-medium text-gray-100 mb-1">Mot de passe</label>
+          <div class="relative">
+            <input id="password" type="password" [(ngModel)]="password"
+              class="bg-transparent w-full text-white placeholder-gray-400 border-0 border-b border-primary/50 pb-2 focus:outline-none focus:ring-0 focus:border-primary transition-colors"
+              placeholder="••••••••" />
+            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+            </div>
+          </div>
+          <div class="flex justify-end mt-1">
+            <a href="#" class="text-xs text-primary hover:text-yellow-300">Mot de passe oublié ?</a>
+          </div>
+        </div>
+
+        <!-- Bouton de connexion -->
+        <button (click)="login()"
+          class="w-full flex justify-center items-center space-x-2 bg-primary hover:bg-yellow-500 text-gray-900 font-medium py-3 px-4 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-gray-800">
+          <span>Se connecter</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </button>
+      </form>
+
+      <!-- Lien d'inscription -->
+      <div class="mt-6 text-center text-sm text-gray-400">
+        <p>Pas encore inscrit ? <a (click)="goToRegister()"
+            class="text-primary font-medium hover:text-yellow-300 transition-colors">Créer un compte</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenu pour mobile -->
+  <div class="md:hidden z-10 w-full">
+    <!-- Carte avec fond semi-transparent -->
+    <div class="">
+      <!-- Logo - version épurée -->
+      <div class="text-center mb-10">
+        <h1 class="text-4xl text-primary font-bold tracking-tight font-sans">faydah</h1>
+      </div>
+
+      <!-- Formulaire -->
+      <form class="space-y-6 px-4">
+        <!-- Champ Email -->
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Identifiant</label>
+          <div class="relative">
+            <input id="email" type="email" [(ngModel)]="email"
+              class="bg-transparent w-full text-white placeholder-gray-400 border-0 border-b border-primary pb-2 focus:outline-none focus:ring-0 focus:border-primary transition-colors"
+              placeholder="email@exemple.com" />
+            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Champ Mot de passe -->
+        <div>
+          <label for="password" class="block text-sm font-medium text-gray-300 mb-1">Mot de passe</label>
+          <div class="relative">
+            <input id="password" type="password" [(ngModel)]="password"
+              class="bg-transparent w-full text-white placeholder-gray-400 border-0 border-b border-primary pb-2 focus:outline-none focus:ring-0 focus:border-primary transition-colors"
+              placeholder="••••••••" />
+            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+            </div>
+          </div>
+          <div class="flex justify-end mt-1">
+            <a href="#" class="text-xs text-primary hover:text-yellow-300">Mot de passe oublié ?</a>
+          </div>
+        </div>
+
+        <!-- Bouton de connexion -->
+        <div class="mx-auto w-full">
+          <button (click)="login()"
+            class="w-14 h-14 mx-auto rounded-full bg-yellow-400 hover:bg-yellow-500 text-gray-900 shadow-lg flex items-center justify-center transition-transform hover:scale-105">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </button>
+        </div>
+      </form>
+
+      <!-- Lien d'inscription -->
+      <div class="mt-6 text-center text-sm text-gray-400">
+        <p>Pas encore inscrit ? <a (click)="goToRegister()"
+            class="text-primary font-medium hover:text-yellow-300 transition-colors">Créer un compte</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+***************
+
+<div class="relative w-full h-screen text-white font-sans">
+  <!-- Image de fond avec filtre -->
+  <div class="absolute inset-0 bg-cover bg-center brightness-50" style="background-image: url('/assets/images/background.jpg');"></div>
+
+  <!-- Contenu centré -->
+  <div class="relative z-10 flex flex-col justify-center h-full px-8">
+
+    <!-- Logo texte -->
+    <h1 class="text-5xl text-yellow-400 font-bold text-center mb-12 tracking-wide font-serif">faydah</h1>
+
+    <!-- Champ Identifiant -->
+    <div class="mb-6">
+      <label class="block text-sm mb-1">Identifiant</label>
+      <input [(ngModel)]="email"
+             type="text"
+             class="bg-transparent w-full text-white placeholder-white border-0 border-b border-yellow-400 pb-1 focus:outline-none focus:ring-0 focus:border-yellow-400"
+             placeholder="Entrez votre identifiant" />
+    </div>
+
+    <!-- Champ Mot de passe -->
+    <div class="mb-6">
+      <label class="block text-sm mb-1">Mot de passe</label>
+      <input [(ngModel)]="password"
+             type="password"
+             class="bg-transparent w-full text-white placeholder-white border-0 border-b border-yellow-400 pb-1 focus:outline-none focus:ring-0 focus:border-yellow-400"
+             placeholder="Entrez votre mot de passe" />
+    </div>
+
+    <!-- Bouton d'envoi -->
+    <div class="flex justify-end mb-6">
+      <button (click)="login()" class="w-12 h-12 text-yellow-400 flex items-center justify-center hover:bg-yellow-400 hover:text-black transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+             viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Lien d'inscription -->
+    <div class="text-center text-sm text-gray-300">
+      <p>Pas encore inscrit ?</p>
+      <a routerLink="/register" class="text-yellow-400 underline font-medium hover:text-yellow-300 transition-colors">
+        Crée un compte ici
+      </a>
+    </div>
+  </div>
+</div>
+
+
+
+*********************
+
+<div class="relative flex items-center justify-center min-h-screen w-full overflow-hidden">
+  <!-- Background image -->
+  <div class="absolute inset-0 bg-cover bg-center filter grayscale z-0" 
+       style="background-image: url('/assets/login-background.jpg')"></div>
+  
+  <!-- Login form container -->
+  <div class="w-full max-w-md px-4 sm:px-6 z-10">
+    <div class="bg-[#333333]/95 rounded-xl shadow-2xl p-6 sm:p-10">
+      <h1 class="text-[#d4b675] text-4xl font-semibold text-center mb-10">Faydah</h1>
+      
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <!-- Username field -->
+        <div class="mb-6">
+          <input 
+            type="text" 
+            formControlName="username" 
+            placeholder="Identifiant"
+            class="w-full bg-transparent border-b border-white/30 py-3 text-white focus:border-[#d4b675] focus:outline-none transition-colors"
+            [ngClass]="{'border-red-500': loginForm.get('username')?.invalid && loginForm.get('username')?.touched}"
+          />
+          <div *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched" 
+               class="text-red-500 text-sm mt-1">
+            Identifiant requis
+          </div>
+        </div>
+        
+        <!-- Password field -->
+        <div class="mb-6 relative">
+          <input 
+            [type]="hidePassword ? 'password' : 'text'" 
+            formControlName="password" 
+            placeholder="Mot de passe"
+            class="w-full bg-transparent border-b border-white/30 py-3 text-white pr-10 focus:border-[#d4b675] focus:outline-none transition-colors"
+            [ngClass]="{'border-red-500': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}"
+          />
+          <button 
+            type="button" 
+            class="absolute right-0 top-3 text-white/50 hover:text-white focus:outline-none" 
+            (click)="togglePasswordVisibility()"
+            [attr.aria-label]="hidePassword ? 'Afficher le mot de passe' : 'Masquer le mot de passe'"
+          >
+            <i [class]="hidePassword ? 'lucide-eye-off' : 'lucide-eye'"></i>
+          </button>
+          <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-red-500 text-sm mt-1">
+            <span *ngIf="loginForm.get('password')?.errors?.['required']">Mot de passe requis</span>
+            <span *ngIf="loginForm.get('password')?.errors?.['minlength']">Le mot de passe doit contenir au moins 6 caractères</span>
+          </div>
+        </div>
+        
+        <!-- Error message -->
+        <div *ngIf="loginError" class="bg-red-500/10 border border-red-500/30 text-red-500 p-3 rounded mb-6 text-sm">
+          {{ loginError }}
+        </div>
+        
+        <!-- Forgot password link -->
+        <div class="text-right mb-6">
+          <a 
+            href="javascript:void(0)" 
+            (click)="forgotPassword()" 
+            class="text-white/60 text-sm hover:text-[#d4b675] hover:underline"
+          >
+            Mot de passe oublié?
+          </a>
+        </div>
+        
+        <!-- Login button -->
+        <button 
+          type="submit" 
+          class="w-full bg-[#d4b675] text-[#333333] py-3 rounded-full font-semibold hover:bg-[#c0a665] transition-colors disabled:opacity-70 disabled:cursor-not-allowed flex justify-center items-center"
+          [disabled]="isLoading"
+        >
+          <span *ngIf="!isLoading">Se connecter</span>
+          <svg *ngIf="isLoading" class="animate-spin h-5 w-5 text-[#333333]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

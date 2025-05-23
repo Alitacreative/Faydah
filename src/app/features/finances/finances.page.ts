@@ -77,6 +77,7 @@ export class FinancesPage implements OnInit {
 
   ngOnInit() {
     // Initialisation ou récupération des données depuis un service
+    this.openContributionStory();
   }
 
   // Méthode pour formater les nombres avec espacement des milliers

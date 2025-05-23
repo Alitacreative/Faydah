@@ -1,0 +1,73 @@
+<div class="w-9/12 mx-auto my-8 bg-white rounded-xl overflow-hidden shadow-lg z-10 h-full">
+  <!-- En-tête avec les filtres -->
+  <div class="bg-white px-4 py-3 shadow-sm">
+    <div class="flex justify-between items-center mb-2">
+      <!-- <h1 class="text-lg font-medium text-gray-800">Notifications</h1> -->
+      <div class="flex space-x-2">
+        <button 
+          (click)="setFilter('all')"
+          [ngClass]="{'bg-gray-900 text-white': (currentFilter$ | async) === 'all', 'bg-none text-gray-800': (currentFilter$ | async) !== 'all'}"
+          class="px-3 py-1 rounded-full text-sm font-medium">
+          Tous
+        </button>
+        <button 
+          (click)="setFilter('unread')"
+          [ngClass]="{'bg-gray-900 text-white': (currentFilter$ | async) === 'unread', 'bg-none text-gray-800': (currentFilter$ | async) !== 'unread'}"
+          class="px-3 py-1 rounded-full text-sm font-medium">
+          Non lu
+        </button>
+      </div>
+      <button 
+        *ngIf="(unreadCount$ | async)"
+        (click)="markAllAsRead()"
+        class="text-sm text-green-600 font-medium">
+        Tout marquer comme lu
+      </button>
+    </div>
+    
+    <!-- Filtres -->
+  </div>
+  
+  <!-- Liste des notifications -->
+  <div class="flex-grow overflow-y-auto">
+    <ng-container *ngIf="loading$ | async">
+      <div class="flex justify-center items-center py-8">
+        <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-green-500"></div>
+      </div>
+    </ng-container>
+    
+    <ng-container *ngIf="!(loading$ | async) && (filteredNotifications$ | async)?.length === 0">
+      <div class="flex flex-col items-center justify-center py-12 px-4 text-center">
+        <svg class="w-16 h-16 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+        </svg>
+        <p class="text-gray-500">Aucune notification pour le moment</p>
+      </div>
+    </ng-container>
+
+    <div class="divide-y divide-gray-100">
+      <div 
+        *ngFor="let notification of filteredNotifications$ | async" 
+        class="flex items-start p-4 hover:bg-gray-50 cursor-pointer transition-colors"
+        [ngClass]="{'bg-white': notification.read, 'bg-green-50': !notification.read}"
+        (click)="!notification.read && markAsRead(notification.id)">
+        
+        <!-- Avatar -->
+        <div class="flex-shrink-0 mr-3">
+          <div class="h-10 w-10 rounded-full overflow-hidden bg-gray-200">
+            <img [src]="notification.userAvatar" alt="Avatar" class="h-full w-full object-cover" />
+          </div>
+        </div>
+        
+        <!-- Contenu -->
+        <div class="flex-grow">
+          <div class="flex justify-between">
+            <p class="text-sm font-medium text-gray-900">{{ notification.userName }}</p>
+            <span class="text-xs text-gray-500">{{ formatTimeAgo(notification.timestamp) }}</span>
+          </div>
+          <p class="text-sm text-gray-600">{{ notification.message }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

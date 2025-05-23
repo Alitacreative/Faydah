@@ -1,107 +1,100 @@
-<div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50" (click)="cancel()">
-  <div class="bg-white rounded-lg w-full max-w-2xl shadow-xl" (click)="$event.stopPropagation()">
-    <!-- En-tête de la modal -->
-    <div class="px-6 py-4 border-b border-gray-200">
-      <h2 class="text-lg font-medium text-gray-800">Ajouter un projet</h2>
-    </div>
-    
-    <!-- Corps du formulaire -->
-    <div class="p-6">
-      <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
-        <div class="space-y-4">
-          <!-- Titre -->
+<!-- Corps du formulaire -->
+<div class="">
+  <div class="">
+    <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+      <div class="space-y-4">
+        <!-- Titre -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Titre du projet</label>
+          <input 
+            type="text" 
+            formControlName="title"
+            placeholder="Entrez le titre du projet"
+            class="w-full p-2.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-900"
+          >
+          <div *ngIf="projectForm.get('title')?.invalid && projectForm.get('title')?.touched" class="text-red-500 text-xs mt-1">
+            Le titre est requis
+          </div>
+        </div>
+        
+        <!-- Description -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+          <textarea 
+            formControlName="description"
+            rows="4"
+            placeholder="Décrivez le projet en quelques lignes"
+            class="w-full p-2.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-900"
+          ></textarea>
+          <div *ngIf="projectForm.get('description')?.invalid && projectForm.get('description')?.touched" class="text-red-500 text-xs mt-1">
+            La description est requise
+          </div>
+        </div>
+        
+        <!-- Flex container pour Statut et Progression -->
+        <div class="grid grid-cols-2 gap-4">
+          <!-- Statut -->
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Titre du projet</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Statut</label>
+            <select 
+              formControlName="status"
+              class="w-full p-2.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white text-gray-900"
+            >
+              <option value="en_cours">En cours</option>
+              <option value="en_attente">En attente</option>
+              <option value="termine">Terminé</option>
+            </select>
+          </div>
+          
+          <!-- Progression -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Progression (%)</label>
             <input 
-              type="text" 
-              formControlName="title"
-              placeholder="Entrez le titre du projet"
+              type="number" 
+              formControlName="progress"
+              min="0"
+              max="100"
               class="w-full p-2.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-900"
             >
-            <div *ngIf="projectForm.get('title')?.invalid && projectForm.get('title')?.touched" class="text-red-500 text-xs mt-1">
-              Le titre est requis
-            </div>
-          </div>
-          
-          <!-- Description -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
-            <textarea 
-              formControlName="description"
-              rows="3"
-              placeholder="Décrivez le projet en quelques lignes"
-              class="w-full p-2.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-900"
-            ></textarea>
-            <div *ngIf="projectForm.get('description')?.invalid && projectForm.get('description')?.touched" class="text-red-500 text-xs mt-1">
-              La description est requise
-            </div>
-          </div>
-          
-          <!-- Flex container pour Statut et Progression -->
-          <div class="grid grid-cols-2 gap-4">
-            <!-- Statut -->
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Statut</label>
-              <select 
-                formControlName="status"
-                class="w-full p-2.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white text-gray-900"
-              >
-                <option value="en_cours">En cours</option>
-                <option value="en_attente">En attente</option>
-                <option value="termine">Terminé</option>
-              </select>
-            </div>
-            
-            <!-- Progression -->
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Progression (%)</label>
-              <input 
-                type="number" 
-                formControlName="progress"
-                min="0"
-                max="100"
-                class="w-full p-2.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-900"
-              >
-              <div *ngIf="projectForm.get('progress')?.invalid && projectForm.get('progress')?.touched" class="text-red-500 text-xs mt-1">
-                La progression doit être entre 0 et 100
-              </div>
-            </div>
-          </div>
-          
-          <!-- Date d'échéance -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Date d'échéance</label>
-            <input 
-              type="date" 
-              formControlName="dueDate"
-              class="w-full p-2.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-900"
-            >
-            <div *ngIf="projectForm.get('dueDate')?.invalid && projectForm.get('dueDate')?.touched" class="text-red-500 text-xs mt-1">
-              La date d'échéance est requise
+            <div *ngIf="projectForm.get('progress')?.invalid && projectForm.get('progress')?.touched" class="text-red-500 text-xs mt-1">
+              La progression doit être entre 0 et 100
             </div>
           </div>
         </div>
-      </form>
-    </div>
-    
-    <!-- Pied de la modal avec boutons -->
-    <div class="px-6 py-3 border-t border-gray-200 flex justify-end space-x-3 bg-gray-50 rounded-b-lg">
-      <button 
-        type="button"
-        (click)="cancel()"
-        class="px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 font-medium text-sm"
-      >
-        Annuler
-      </button>
-      <button 
-        type="button"
-        (click)="onSubmit()"
-        [disabled]="projectForm.invalid"
-        [ngClass]="{'opacity-50 cursor-not-allowed': projectForm.invalid}"
-        class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 font-medium text-sm"
-      >
-        Créer
-      </button>
-    </div>
+        
+        <!-- Date d'échéance -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Date d'échéance</label>
+          <input 
+            type="date" 
+            formControlName="dueDate"
+            class="w-full p-2.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-900"
+          >
+          <div *ngIf="projectForm.get('dueDate')?.invalid && projectForm.get('dueDate')?.touched" class="text-red-500 text-xs mt-1">
+            La date d'échéance est requise
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  
+  <!-- Pied de la modal avec boutons -->
+  <div class="mt-6 flex justify-end space-x-3">
+    <button 
+      type="button"
+      (click)="onCancel()"
+      class="px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 font-medium text-sm"
+    >
+      Annuler
+    </button>
+    <button 
+      type="button"
+      (click)="onSubmit()"
+      [disabled]="projectForm.invalid"
+      [ngClass]="{'opacity-50 cursor-not-allowed': projectForm.invalid}"
+      class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 font-medium text-sm"
+    >
+      Créer
+    </button>
   </div>
 </div>

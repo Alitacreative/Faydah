@@ -1,0 +1,85 @@
+<div class="bg-white shadow-md rounded-lg max-w-lg mx-auto my-8 max-h-[80vh] overflow-auto">
+  <div class="flex justify-between items-center px-4 py-3 border-b border-gray-200 sticky top-0 bg-white z-10">
+    <h1 class="text-lg font-semibold">Modifier l'utilisateur</h1>
+    <button (click)="dismiss()" class="text-gray-600 hover:text-gray-800 focus:outline-none">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+
+  <div class="px-6 py-4">
+    <div class="mb-6 flex justify-center">
+      <div class="relative w-24 h-24 rounded-full overflow-hidden bg-gray-200 border-2 border-green-500">
+        <img [src]="editedUser.image" alt="Avatar" class="w-full h-full object-cover" />
+        <div class="absolute bottom-0 right-0 bg-green-600 rounded-full p-1.5 text-white cursor-pointer">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8h4l3-3 3 3h4v11H3V8z" />
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1" for="name">Nom complet</label>
+        <input
+          id="name"
+          type="text"
+          [(ngModel)]="editedUser.name"
+          placeholder="Nom et prénom"
+          class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
+        />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1" for="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          [(ngModel)]="editedUser.email"
+          placeholder="exemple@email.com"
+          class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
+        />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1" for="phone">Téléphone</label>
+        <input
+          id="phone"
+          type="tel"
+          [(ngModel)]="editedUser.phone"
+          placeholder="+33 6 12 34 56 78"
+          class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
+        />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1" for="address">Adresse</label>
+        <input
+          id="address"
+          type="text"
+          [(ngModel)]="editedUser.address"
+          placeholder="Votre adresse"
+          class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
+        />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1" for="category">Catégorie</label>
+        <select
+          id="category"
+          [(ngModel)]="editedUser.category"
+          class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
+        >
+          <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="mt-8">
+      <button
+        (click)="saveUser()"
+        class="w-full py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors"
+      >
+        Enregistrer les modifications
+      </button>
+    </div>
+  </div>
+</div>

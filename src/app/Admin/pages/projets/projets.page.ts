@@ -23,11 +23,15 @@ export class ProjetsPage implements OnInit {
   totalPages: number = 1;
   filters: string[] = ['Tous', 'En cours', 'En attente', 'Terminées'];
   activeFilter: string = 'Tous';
+  
+  // Variables pour la modale d'ajout de projet
+  showAddModal: boolean = false;
+  showEditModal: boolean = false;
+  selectedProject: Project | null = null;
 
   constructor(
     private projectService: ProjectService,
-    private router: Router,
-    private modalController: ModalController
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -119,36 +123,37 @@ export class ProjetsPage implements OnInit {
     this.router.navigate(['admin/projets/detail', projectId]);
   }
 
-  async addProject() {
-    const modal = await this.modalController.create({
-      component: AddProjetModalComponent
-    });
-    
-    await modal.present();
-    
-    const { data } = await modal.onDidDismiss();
-    if (data && data.project) {
-      this.projectService.addProject(data.project);
-    }
+  // Gestion des modales
+  openAddModal() {
+    this.showAddModal = true;
   }
 
-  async editProject(project: Project, event: Event) {
+  closeAddModal() {
+    this.showAddModal = false;
+  }
+
+  onAddProject(project: Project) {
+    this.projectService.addProject(project);
+    this.closeAddModal();
+    this.loadProjects();
+  }
+
+  openEditModal(project: Project, event: Event) {
     event.stopPropagation();
     this.closeMenu();
-    
-    const modal = await this.modalController.create({
-      component: EditProjetModalComponent,
-      componentProps: {
-        project: { ...project }
-      }
-    });
-    
-    await modal.present();
-    
-    const { data } = await modal.onDidDismiss();
-    if (data && data.project) {
-      this.projectService.updateProject(data.project);
-    }
+    this.selectedProject = project;
+    this.showEditModal = true;
+  }
+
+  closeEditModal() {
+    this.showEditModal = false;
+    this.selectedProject = null;
+  }
+
+  onEditProject(project: Project) {
+    this.projectService.updateProject(project);
+    this.closeEditModal();
+    this.loadProjects();
   }
 
   changeStatus(projectId: string, status: 'en_cours' | 'en_attente' | 'termine', event: Event) {

@@ -1,27 +1,188 @@
-<ion-content class="login-page">
-  <div class="background-image"></div>
+<div class="min-h-screen bg-cover bg-center md:bg-top text-white font-sans flex items-center justify-center p-4"
+  style="background-image: url('/assets/images/background.jpg');">
+  <!-- Overlay avec flou -->
+  <div class="absolute inset-0 backdrop-blur-[1px] bg-black/80"></div>
 
-  <div class="content-wrapper">
-    <img src="assets/images/faydah-logo.png" alt="Faydah" class="logo" />
+  <!-- Contenu principal pour desktop -->
+  <div class="hidden md:block relative z-10 w-full max-w-md">
+    <!-- Carte avec fond semi-transparent -->
+    <div class="bg-black/50 rounded-2xl border border-none p-8 shadow-2xl">
+      <!-- Logo - version épurée -->
+      <div class="text-center mb-10">
+        <h1 class="text-4xl text-primary font-bold tracking-tight font-serif">faydah</h1>
+        <p class="text-gray-400 mt-2">Accès à votre espace</p>
+      </div>
 
-    <ion-item lines="none" class="input-item">
-      <ion-label position="floating" class="input-label">Identifiant</ion-label>
-      <ion-input [(ngModel)]="email" class="input-text" type="text"></ion-input>
-    </ion-item>
-    
-    <ion-item lines="none" class="input-item">
-      <ion-label position="floating" class="input-label">Mot de passe</ion-label>
-      <ion-input [(ngModel)]="password" class="input-text" type="password"></ion-input>
-    </ion-item>
+      <!-- Formulaire -->
+      <form class="space-y-6" [formGroup]="loginForm" (ngSubmit)="login()">
+        <!-- Champ Email -->
+        <div class="mb-4">
+          <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Identifiant</label>
+          <div class="relative">
+            <input id="email" type="email" formControlName="email"
+              class="bg-transparent w-full text-white placeholder-gray-400 border-0 border-b border-primary pb-2 focus:outline-none focus:ring-0 focus:border-primary transition-colors"
+              placeholder="email@exemple.com"
+              [ngClass]="{'!border-red-500': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}" />
+            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
+              </svg>
+            </div>
+          </div>
+          <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+            class="text-red-500 text-sm mt-1">
+            <span *ngIf="loginForm.get('email')?.errors?.['required']">Identifiant requis</span>
+            <span *ngIf="loginForm.get('email')?.errors?.['email']">Format d'email invalide</span>
+          </div>
+        </div>
 
-    <div class="submit-button" (click)="login()">
-      <ion-icon name="arrow-forward-outline"></ion-icon>
-    </div>
+        <!-- Champ Mot de passe -->
+        <div>
+          <label for="password" class="block text-sm font-medium text-gray-300 mb-1">Mot de passe</label>
+          <div class="relative mb-6">
+            <input id="password" formControlName="password"
+              class="bg-transparent w-full text-white placeholder-gray-400 border-0 border-b border-primary pb-2 focus:outline-none focus:ring-0 focus:border-primary transition-colors"
+              placeholder="••••••••" [type]="hidePassword ? 'password' : 'text'"
+              [ngClass]="{'!border-red-500': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}" />
+            <div class="absolute inset-y-3 right-0 flex items-center pr-3"
+              [ngClass]="{'top-0': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}"
+              (click)="togglePasswordVisibility()">
+              <ion-icon [name]="hidePassword ? 'eye-off' : 'eye'"></ion-icon>
+            </div>
+            <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+              class="text-red-500 text-sm mt-1">
+              <span *ngIf="loginForm.get('password')?.errors?.['required']">Mot de passe requis</span>
+              <span *ngIf="loginForm.get('password')?.errors?.['minlength']">Le mot de passe doit contenir au moins 6
+                caractères</span>
+            </div>
+          </div>
+        </div>
 
-    <div class="register-text">
-      <p>Pas encore inscrit ?</p>
-      <!-- Remplace ion-router-link par ion-button avec routerLink -->
-      <ion-button routerLink="/register" class="register-link" fill="clear">Crée un compte ici</ion-button>
+        <!-- Error message -->
+        <div *ngIf="loginError" class="bg-red-500/10 border border-red-500/30 text-red-500 p-3 rounded mb-6 text-sm">
+          {{ loginError }}
+        </div>
+
+        <!-- Bouton de connexion -->
+        <button type="submit" [disabled]="loginForm.invalid" class="w-full flex justify-center items-center space-x-2 bg-primary 
+         text-gray-900 font-medium py-3 px-4 rounded-lg transition-colors 
+         focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-gray-800
+         enabled:hover:bg-yellow-500 disabled:opacity-50 disabled:cursor-not-allowed">
+          <span>Se connecter</span>
+          <svg *ngIf="!isLoading" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+          <svg *ngIf="isLoading" class="animate-spin h-5 w-5 text-[#333333]" xmlns="http://www.w3.org/2000/svg"
+            fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+            </path>
+          </svg>
+        </button>
+
+      </form>
+
+      <!-- Lien d'inscription -->
+      <div class="mt-6 text-center text-sm text-gray-400">
+        <p>Pas encore inscrit ? <a (click)="goToRegister()"
+            class="text-primary font-medium hover:text-yellow-300 transition-colors">Créer un compte</a></p>
+      </div>
     </div>
   </div>
-</ion-content>
+
+  <!-- Contenu pour mobile -->
+  <div class="md:hidden z-10 w-full">
+    <!-- Carte avec fond semi-transparent -->
+    <div class="">
+      <!-- Logo - version épurée -->
+      <div class="text-center mb-10">
+        <h1 class="text-4xl text-primary font-bold tracking-tight font-sans">faydah</h1>
+      </div>
+
+      <!-- Formulaire -->
+      <form class="space-y-6 px-4" [formGroup]="loginForm" (ngSubmit)="login()">
+        <!-- Champ Email -->
+        <div class="mb-4">
+          <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Identifiant</label>
+          <div class="relative">
+            <input id="email" type="email" formControlName="email"
+              class="bg-transparent w-full text-white placeholder-gray-400 border-0 border-b border-primary pb-2 focus:outline-none focus:ring-0 focus:border-primary transition-colors"
+              placeholder="email@exemple.com"
+              [ngClass]="{'!border-red-500': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}" />
+            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
+              </svg>
+            </div>
+          </div>
+          <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+            class="text-red-500 text-sm mt-1">
+            <span *ngIf="loginForm.get('email')?.errors?.['required']">Identifiant requis</span>
+            <span *ngIf="loginForm.get('email')?.errors?.['email']">Format d'email invalide</span>
+          </div>
+        </div>
+
+        <!-- Champ Mot de passe -->
+        <div class="mb-4">
+          <label for="password" class="block text-sm font-medium text-gray-300 mb-1">Mot de passe</label>
+          <div class="relative mb-6">
+            <input id="password" formControlName="password"
+              class="bg-transparent w-full text-white placeholder-gray-400 border-0 border-b border-primary pb-2 focus:outline-none focus:ring-0 focus:border-primary transition-colors"
+              placeholder="••••••••" [type]="hidePassword ? 'password' : 'text'"
+              [ngClass]="{'!border-red-500': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}" />
+            <div class="absolute inset-y-3 right-0 flex items-center pr-3"
+              [ngClass]="{'top-0': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}"
+              (click)="togglePasswordVisibility()">
+              <ion-icon [name]="hidePassword ? 'eye-off' : 'eye'"></ion-icon>
+            </div>
+            <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+              class="text-red-500 text-sm mt-1">
+              <span *ngIf="loginForm.get('password')?.errors?.['required']">Mot de passe requis</span>
+              <span *ngIf="loginForm.get('password')?.errors?.['minlength']">Le mot de passe doit contenir au moins 6
+                caractères</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Error message -->
+        <div *ngIf="loginError" class="bg-red-500/10 border border-red-500/30 text-red-500 p-3 rounded mb-6 text-sm">
+          {{ loginError }}
+        </div>
+
+        <div class="flex justify-end mt-1">
+          <a href="#" class="text-xs text-primary hover:text-yellow-300">Mot de passe oublié ?</a>
+        </div>
+        <!-- Bouton de connexion -->
+        <div class="mx-auto w-full">
+          <button type="submit" [disabled]="loginForm.invalid"
+            class="w-14 h-14 mx-auto rounded-full bg-primary enabled:hover:bg-yellow-400 text-gray-900 shadow-lg flex items-center justify-center transition-transform hover:scale-105
+            disabled:opacity-50 disabled:cursor-not-allowed">
+            <svg *ngIf="!isLoading" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+            <svg *ngIf="isLoading" class="animate-spin h-5 w-5 text-[#333333]" xmlns="http://www.w3.org/2000/svg"
+              fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+              </path>
+            </svg>
+          </button>
+        </div>
+      </form>
+
+      <!-- Lien d'inscription -->
+      <div class="mt-6 text-center text-sm text-gray-400">
+        <p>Pas encore inscrit ? <span (click)="goToRegister()"
+            class="text-primary font-medium hover:text-yellow-300 transition-colors">Créer un compte</span></p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,5 @@
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-<div class="flex h-screen bg-gray-100">
+<div class="flex h-screen bg-gray-100 ">
+  <!-- Sidebar -->
   <div [ngClass]="{'hidden': !isSidebarOpen}"
     class="w-64 bg-gradient-to-b from-gray-800 to-gray-900 text-white flex flex-col shadow-xl transition-all duration-300">
     <div class="p-6">
@@ -7,15 +7,16 @@
     </div>
     <div class="border-t border-gray-700 opacity-40 mx-5 mb-5"></div>
 
-    <nav class="flex-1 px-4 pb-4">
+    <nav class="flex-1 px-4 pb-4 overflow-y-auto hide-scrollbar">
       <a (click)="navigate('dashboard')"
         [ngClass]="{'hover:bg-gray-700 cursor-pointer opacity-80 transition-colors mb-1': !isActive('dashboard'), 'bg-green-600 text-white opacity-100': isActive('dashboard')}"
         class="flex items-center px-3 py-3 p-2 font-semibold rounded">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 " fill="none" viewBox="0 0 24 24"
           stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+            d="M2.25 7.125C2.25 6.504 2.754 6 3.375 6h6c.621 0 1.125.504 1.125 1.125v3.75c0 .621-.504 1.125-1.125 1.125h-6a1.125 1.125 0 0 1-1.125-1.125v-3.75ZM14.25 8.625c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v8.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-8.25ZM3.75 16.125c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-2.25Z" />
         </svg>
+
         <span class="">Tableau de bord</span>
       </a>
 
@@ -36,8 +37,9 @@
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24"
           stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+            d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5V3.545M12.75 21h7.5V10.75M2.25 21h1.5m18 0h-18M2.25 9l4.5-1.636M18.75 3l-1.5.545m0 6.205 3 1m1.5.5-1.5-.5M6.75 7.364V3h-3v18m3-13.636 10.5-3.819" />
         </svg>
+
         <span class="">Dahira</span>
       </a>
 
@@ -47,9 +49,10 @@
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 " fill="none" viewBox="0 0 24 24"
           stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+            d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 0 0 .75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 0 0-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0 1 12 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 0 1-.673-.38m0 0A2.18 2.18 0 0 1 3 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 0 1 3.413-.387m7.5 0V5.25A2.25 2.25 0 0 0 13.5 3h-3a2.25 2.25 0 0 0-2.25 2.25v.894m7.5 0a48.667 48.667 0 0 0-7.5 0M12 12.75h.008v.008H12v-.008Z" />
         </svg>
-        <span class="">Projets</span>
+
+        <span class="">Levée de fonds</span>
       </a>
 
       <a (click)="navigate('ressources')"
@@ -69,24 +72,69 @@
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 " fill="none" viewBox="0 0 24 24"
             stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+              d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z" />
           </svg>
+
           <span class="mr-2">Demandes</span>
           <span
             [ngClass]="{'text-green-600 bg-white': isActive('demandes'), 'text-white bg-green-600': !isActive('demandes')}"
             class="text-xs px-2.5 py-1 rounded-full">2</span>
         </div>
       </a>
+      <a (click)="navigate('maps')"
+        [ngClass]="{'hover:bg-gray-700 cursor-pointer opacity-80 transition-colors mb-1': !isActive('maps'), 'bg-green-600 text-white opacity-100': isActive('maps')}"
+        class="flex items-center px-3 py-3 p-2 font-semibold rounded">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L16 4m0 13V4m0 0L9 7" />
+        </svg>
+        <span class="">Maps</span>
+      </a>
+      <a (click)="navigate('tourisme')"
+        [ngClass]="{'hover:bg-gray-700 cursor-pointer opacity-80 transition-colors mb-1': !isActive('tourisme'), 'bg-green-600 text-white opacity-100': isActive('tourisme')}"
+        class="flex items-center px-3 py-3 p-2 font-semibold rounded">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 " fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="m20.893 13.393-1.135-1.135a2.252 2.252 0 0 1-.421-.585l-1.08-2.16a.414.414 0 0 0-.663-.107.827.827 0 0 1-.812.21l-1.273-.363a.89.89 0 0 0-.738 1.595l.587.39c.59.395.674 1.23.172 1.732l-.2.2c-.212.212-.33.498-.33.796v.41c0 .409-.11.809-.32 1.158l-1.315 2.191a2.11 2.11 0 0 1-1.81 1.025 1.055 1.055 0 0 1-1.055-1.055v-1.172c0-.92-.56-1.747-1.414-2.089l-.655-.261a2.25 2.25 0 0 1-1.383-2.46l.007-.042a2.25 2.25 0 0 1 .29-.787l.09-.15a2.25 2.25 0 0 1 2.37-1.048l1.178.236a1.125 1.125 0 0 0 1.302-.795l.208-.73a1.125 1.125 0 0 0-.578-1.315l-.665-.332-.091.091a2.25 2.25 0 0 1-1.591.659h-.18c-.249 0-.487.1-.662.274a.931.931 0 0 1-1.458-1.137l1.411-2.353a2.25 2.25 0 0 0 .286-.76m11.928 9.869A9 9 0 0 0 8.965 3.525m11.928 9.868A9 9 0 1 1 8.965 3.525" />
+        </svg>
+        <span class="">Tourisme Spirituel</span>
+      </a>
+      <a (click)="navigate('discussions')"
+        [ngClass]="{'hover:bg-gray-700 cursor-pointer opacity-80 transition-colors mb-1': !isActive('discussions'), 'bg-green-600 text-white opacity-100': isActive('discussions')}"
+        class="flex items-center px-3 py-3 p-2 font-semibold rounded">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 " fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
+        </svg>
 
+
+        <span class="">Discussions</span>
+      </a>
       <a (click)="navigate('statistiques')"
         [ngClass]="{'hover:bg-gray-700 cursor-pointer opacity-80 transition-colors mb-1': !isActive('statistiques'), 'bg-green-600 text-white opacity-100': isActive('statistiques')}"
         class="flex items-center px-3 py-3 p-2 font-semibold rounded">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 " fill="none" viewBox="0 0 24 24"
           stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605" />
         </svg>
+
         <span class="">Statistiques</span>
+      </a>
+      <a (click)="navigate('logs')"
+        [ngClass]="{'hover:bg-gray-700 cursor-pointer opacity-80 transition-colors mb-1': !isActive('logs'), 'bg-green-600 text-white opacity-100': isActive('logs')}"
+        class="flex items-center px-3 py-3 p-2 font-semibold rounded">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 " fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M8.242 5.992h12m-12 6.003H20.24m-12 5.999h12M4.117 7.495v-3.75H2.99m1.125 3.75H2.99m1.125 0H5.24m-1.92 2.577a1.125 1.125 0 1 1 1.591 1.59l-1.83 1.83h2.16M2.99 15.745h1.125a1.125 1.125 0 0 1 0 2.25H3.74m0-.002h.375a1.125 1.125 0 0 1 0 2.25H2.99" />
+        </svg>
+
+
+        <span class="">Logs</span>
       </a>
     </nav>
 
@@ -96,7 +144,7 @@
   </div>
 
   <!-- Contenu principal -->
-  <main class="flex-1 overflow-y-auto text-black">
+  <main class="flex-1 overflow-y-auto hide-scrollbar text-black">
     <!-- En-tête -->
     <header class="sticky top-0 z-40 bg-white shadow-sm flex items-center justify-between p-4">
       <div class="flex items-center">
@@ -123,8 +171,9 @@
       </div>
 
       <div class="flex items-center">
-        <div class="relative mr-3">
-          <button class="relative p-1 rounded-full focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-transparent">
+        <div class="relative mr-3" (click)="navigate('notifications')">
+          <button
+            class="relative p-1 rounded-full focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-transparent">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-gray-600" fill="none" viewBox="0 0 24 24"
               stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -153,12 +202,9 @@
         <!-- Tooltip Container -->
         <div class="tooltip-container relative inline-block max-w-xs">
           <!-- Trigger -->
-          <div
-            class="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-xl shadow-xs cursor-pointer"
+          <div class="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-xl shadow-xs cursor-pointer"
             (click)="toggleTooltip()">
-            <img class="w-9 h-9 rounded-full"
-            src="https://randomuser.me/api/portraits/men/32.jpg"
-              alt="Avatar">
+            <img class="w-9 h-9 rounded-full" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Avatar">
 
             <div class="flex-1">
               <h4 class="text-sm font-semibold text-gray-800 ">
@@ -169,11 +215,11 @@
               </p>
             </div>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1 text-green-500" viewBox="0 0 20 20"
-            fill="currentColor">
-            <path fill-rule="evenodd"
-              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-              clip-rule="evenodd" />
-          </svg>
+              fill="currentColor">
+              <path fill-rule="evenodd"
+                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                clip-rule="evenodd" />
+            </svg>
           </div>
 
           <!-- Tooltip Content -->
@@ -187,8 +233,7 @@
 
             <!-- Header -->
             <div class="flex items-center gap-3 p-4 border-b border-gray-200 ">
-              <img class="w-10 h-10 rounded-full ring-2 ring-white"
-              src="https://randomuser.me/api/portraits/men/32.jpg"
+              <img class="w-10 h-10 rounded-full ring-2 ring-white" src="https://randomuser.me/api/portraits/men/32.jpg"
                 alt="Avatar">
               <div class="flex-1">
                 <h4 class="font-semibold text-gray-800 dark:text-white">
@@ -230,7 +275,7 @@
               <div size="small"
                 class="px-3 py-1.5 text-sm font-medium bg-blue-600 text-white rounded-full hover:bg-blue-700">
                 Follow
-            </div>
+              </div>
             </div>
           </div>
         </div>
@@ -238,7 +283,7 @@
     </header>
 
     <!-- Contenu -->
-    <div class="">
+    <div class="hide-scrollbar">
       <!-- Router outlet pour l'affichage des pages -->
       <router-outlet></router-outlet>
     </div>

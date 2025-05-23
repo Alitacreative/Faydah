@@ -1,0 +1,88 @@
+// 5. DIRECTIVE POUR MASQUER/AFFICHER SELON L'APPAREIL
+
+// src/app/directives/device-visibility.directive.ts
+import { Directive, Input, TemplateRef, ViewContainerRef, OnInit, OnDestroy } from '@angular/core';
+import { DeviceService } from '../services/device.service';
+import { Subscription } from 'rxjs';
+
+@Directive({
+  selector: '[appShowOnDevice]'
+})
+export class DeviceVisibilityDirective implements OnInit, OnDestroy {
+  @Input() appShowOnDevice: 'mobile' | 'tablet' | 'desktop' | string[] = 'desktop';
+  
+  private subscription: Subscription;
+
+  constructor(
+    private templateRef: TemplateRef<any>,
+    private viewContainer: ViewContainerRef,
+    private deviceService: DeviceService
+  ) {}
+
+  ngOnInit() {
+    this.subscription = this.deviceService.deviceInfo$.subscribe(deviceInfo => {
+      this.updateVisibility(deviceInfo);
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
+  private updateVisibility(deviceInfo: any) {
+    const allowedDevices = Array.isArray(this.appShowOnDevice) 
+      ? this.appShowOnDevice 
+      : [this.appShowOnDevice];
+
+    let shouldShow = false;
+
+    allowedDevices.forEach(device => {
+      switch (device) {
+        case 'mobile':
+          shouldShow = shouldShow || deviceInfo.isMobile;
+          break;
+        case 'tablet':
+          shouldShow = shouldShow || deviceInfo.isTablet;
+          break;
+        case 'desktop':
+          shouldShow = shouldShow || deviceInfo.isDesktop;
+          break;
+      }
+    });
+
+    if (shouldShow) {
+      this.viewContainer.createEmbeddedView(this.templateRef);
+    } else {
+      this.viewContainer.clear();
+    }
+  }
+}
+
+// 6. UTILISATION DE LA DIRECTIVE DANS LES TEMPLATES
+
+/*
+<!-- Afficher seulement sur desktop -->
+<div *appShowOnDevice="'desktop'">
+  <h2>Contenu Desktop</h2>
+  <p>Cette section n'est visible que sur desktop</p>
+</div>
+
+<!-- Afficher sur mobile et tablette -->
+<div *appShowOnDevice="['mobile', 'tablet']">
+  <h2>Contenu Mobile/Tablette</h2>
+  <p>Cette section est visible sur mobile et tablette</p>
+</div>
+
+<!-- Menu différent selon l'appareil -->
+<ion-toolbar>
+  <div *appShowOnDevice="'desktop'">
+    <ion-button>Menu Desktop</ion-button>
+  </div>
+  
+  <div *appShowOnDevice="['mobile', 'tablet']">
+    <ion-menu-button></ion-menu-button>
+  </div>
+</ion-toolbar>
+*/

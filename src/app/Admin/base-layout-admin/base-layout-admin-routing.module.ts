@@ -22,7 +22,7 @@ const routes: Routes = [
       // },
       {
         path: 'dahira',
-        loadChildren: () => import('../pages/dahira/dahira.module').then( m => m.DahiraPageModule)
+        loadChildren: () => import('../pages/dahira/dahira.module').then(m => m.DahiraPageModule)
       },
       {
         path: 'projets',
@@ -32,18 +32,34 @@ const routes: Routes = [
         path: 'ressources',
         loadChildren: () => import('../pages/ressources/ressources.module').then(m => m.RessourcesPageModule)
       },
-      // {
-      //   path: 'tourisme',
-      //   loadChildren: () => import('../profile/profile.module').then(m => m.ProfilePageModule)
-      // },
+      {
+        path: 'tourisme',
+        loadChildren: () => import('../pages/tourisme/tourisme.module').then(m => m.TourismePageModule)
+      },
       // {
       //   path: 'statistiques',
       //   loadChildren: () => import('../finances/finances.module').then( m => m.FinancesPageModule)
       // },
-      // {
-      //   path: 'demandes',
-      //   loadChildren: () => import('../finances/finances.module').then( m => m.FinancesPageModule)
-      // },
+      {
+        path: 'demandes',
+        loadChildren: () => import('../pages/demandes/demandes.module').then(m => m.DemandesPageModule)
+      },
+      {
+        path: 'notifications',
+        loadChildren: () => import('../pages/notifications/notifications.module').then(m => m.NotificationsPageModule)
+      },
+      {
+        path: 'maps',
+        loadChildren: () => import('../pages/maps/maps.module').then(m => m.MapsPageModule)
+      },
+      {
+        path: 'logs',
+        loadChildren: () => import('../pages/logs/logs.module').then(m => m.LogsPageModule)
+      },
+      {
+        path: 'discussions',
+        loadChildren: () => import('../pages/discussions/discussions.module').then(m => m.DiscussionsPageModule)
+      },
       {
         path: '',
         redirectTo: 'dashboard',

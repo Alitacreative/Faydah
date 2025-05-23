@@ -6,6 +6,7 @@ import { IonicModule } from '@ionic/angular';
 import { AdminDashboardPageRoutingModule } from './admin-dashboard-routing.module';
 import { AdminDashboardPage } from './admin-dashboard.page';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { StatCardsComponent } from "./components/stat-cards/stat-cards.component";
 
 @NgModule({
   imports: [
@@ -13,8 +14,9 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     FormsModule,
     IonicModule,
     AdminDashboardPageRoutingModule,
-    NgApexchartsModule
-  ],
+    NgApexchartsModule,
+    StatCardsComponent
+],
   declarations: [AdminDashboardPage], // Déclarez le composant ici
 })
 export class AdminDashboardPageModule {}

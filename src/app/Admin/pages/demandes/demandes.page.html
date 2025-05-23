@@ -1,71 +1,86 @@
 <div class="p-6 bg-gray-100 min-h-screen" (click)="closePopupsOnOutsideClick($event)">
   <h1 class="text-2xl text-gray-700 font-medium mb-6">Demandes</h1>
-  
+
   <!-- Stats Cards -->
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-    <div class="bg-white p-4 rounded-lg shadow">
-      <div class="flex flex-col items-center">
-        <h2 class="text-5xl font-bold mb-1">{{ pendingCount }}</h2>
-        <p class="text-lg">Demande en attentes</p>
-        <p class="text-orange-500 text-sm">Nécessite votre attention</p>
+    <div class="bg-white p-4 rounded-lg shadow border-l-4 border-amber-500">
+      <div class="flex items-center justify-center gap-4">
+        <div class="flex flex-col items-center">
+          <p class="text-sm text-gray-700">Demande en attentes</p>
+          <h2 class="text-5xl font-bold mb-1">{{ pendingCount }}</h2>
+          <p class="text-amber-500 text-sm">Nécessite votre attention</p>
+        </div>
+        <div class="bg-amber-100 p-3 rounded-full">
+            <svg class="h-6 w-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+          </div>
       </div>
     </div>
-    
-    <div class="bg-white p-4 rounded-lg shadow">
-      <div class="flex flex-col items-center">
-        <h2 class="text-5xl font-bold mb-1">{{ approvedCount }}</h2>
-        <p class="text-lg">Demande approuvées</p>
-        <p class="text-green-500 text-sm">Complétées ce mois</p>
+
+    <div class="bg-white p-4 rounded-lg shadow border-l-4 border-green-500">
+      <div class="flex items-center justify-center gap-4">
+        <div class="flex flex-col items-center">
+          <p class="text-sm text-gray-800">Demande approuvées</p>
+          <h2 class="text-5xl font-bold mb-1">{{ approvedCount }}</h2>
+          <p class="text-green-500 text-sm">Complétées ce mois</p>
+        </div>
+        <div class="bg-green-100 p-3 rounded-full">
+          <svg class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
       </div>
     </div>
-    
-    <div class="bg-white p-4 rounded-lg shadow">
-      <div class="flex flex-col items-center">
-        <h2 class="text-5xl font-bold mb-1">{{ rejectedCount }}</h2>
-        <p class="text-lg">Demande rejetées</p>
-        <p class="text-red-500 text-sm">Non approuvées</p>
+
+    <div class="bg-white p-4 rounded-lg shadow border-l-4 border-red-500">
+      <div class="flex items-center justify-center gap-4">
+        <div class="flex flex-col items-center">
+          <p class="text-sm text-gray-700">Demande rejetées</p>
+          <h2 class="text-5xl font-bold mb-1">{{ rejectedCount }}</h2>
+          <p class="text-red-500 text-sm">Non approuvées</p>
+        </div>
+        <div class="bg-red-100 p-3 rounded-full">
+          <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </div>
       </div>
     </div>
   </div>
-  
+
   <!-- Search & Filters -->
-  <div class="flex flex-col md:flex-row gap-4 mb-6">
-    <div class="flex-grow">
+  <div class="flex flex-col md:flex-row justify-between gap-4 mb-6">
+    <div class="flex-grow max-w-lg">
       <div class="relative">
-        <input 
-          type="text" 
-          placeholder="Rechercher une demande" 
-          [(ngModel)]="searchText" 
-          (input)="onSearch()" 
-          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-        >
+        <input type="text" placeholder="Rechercher une demande" [(ngModel)]="searchText" (input)="onSearch()"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
         <button class="absolute right-2 top-2 text-gray-400">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
         </button>
       </div>
     </div>
-    
-    <div class="w-full md:w-48">
-      <select 
-        (change)="onStatusChange($event)" 
-        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent appearance-none bg-white"
-      >
-        <option *ngFor="let status of statusOptions" [value]="status">{{ status }}</option>
-      </select>
-    </div>
-    
-    <div class="w-full md:w-48">
-      <select 
-        (change)="onTypeChange($event)" 
-        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent appearance-none bg-white"
-      >
-        <option *ngFor="let type of typeOptions" [value]="type">{{ type }}</option>
-      </select>
+
+    <div class="flex gap-4">
+      <div class="w-full md:w-48">
+        <select (change)="onStatusChange($event)"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent appearance-none bg-white">
+          <option *ngFor="let status of statusOptions" [value]="status">{{ status }}</option>
+        </select>
+      </div>
+
+      <div class="w-full md:w-48">
+        <select (change)="onTypeChange($event)"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent appearance-none bg-white">
+          <option *ngFor="let type of typeOptions" [value]="type">{{ type }}</option>
+        </select>
+      </div>
     </div>
   </div>
-  
+
   <!-- Table -->
   <div class="bg-white rounded-lg shadow overflow-x-scroll">
     <table class="min-w-full divide-y divide-gray-200">
@@ -88,47 +103,37 @@
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ demand.sujet }}</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ demand.date }}</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm">
-            <span [class]="'px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ' + getStatusColor(demand.statut)">
+            <span
+              [class]="'px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ' + getStatusColor(demand.statut)">
               {{ demand.statut }}
             </span>
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 relative">
-            <button 
+            <button
               class="actions-button text-gray-400 hover:text-gray-600 rounded-full h-8 w-8 flex items-center justify-center border border-gray-200"
-              (click)="toggleActionsPopup(demand.id); $event.stopPropagation();"
-            >
+              (click)="toggleActionsPopup(demand.id); $event.stopPropagation();">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                <path
+                  d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
               </svg>
             </button>
-            
+
             <!-- Actions Popup -->
-            <div 
-              *ngIf="showActionsPopup === demand.id" 
-              class="actions-popup absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10"
-            >
+            <div *ngIf="showActionsPopup === demand.id"
+              class="actions-popup absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
               <div class="py-1" role="menu" aria-orientation="vertical">
-                <button 
-                  class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" 
-                  role="menuitem"
-                  (click)="viewDetails(demand)"
-                >
+                <button class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem"
+                  (click)="viewDetails(demand)">
                   Voir les détails
                 </button>
-                <button 
-                  *ngIf="demand.statut === 'En attente'"
-                  class="block w-full text-left px-4 py-2 text-sm text-green-700 hover:bg-gray-100" 
-                  role="menuitem"
-                  (click)="approveDemand(demand)"
-                >
+                <button *ngIf="demand.statut === 'En attente'"
+                  class="block w-full text-left px-4 py-2 text-sm text-green-700 hover:bg-gray-100" role="menuitem"
+                  (click)="approveDemand(demand)">
                   Approuver
                 </button>
-                <button 
-                  *ngIf="demand.statut === 'En attente'"
-                  class="block w-full text-left px-4 py-2 text-sm text-red-700 hover:bg-gray-100" 
-                  role="menuitem"
-                  (click)="openRejectModal(demand)"
-                >
+                <button *ngIf="demand.statut === 'En attente'"
+                  class="block w-full text-left px-4 py-2 text-sm text-red-700 hover:bg-gray-100" role="menuitem"
+                  (click)="openRejectModal(demand)">
                   Décliner
                 </button>
               </div>
@@ -138,60 +143,43 @@
       </tbody>
     </table>
   </div>
-  
+
   <!-- Pagination -->
   <div class="flex items-center justify-between py-4" *ngIf="pageCount > 1">
     <div>
       <p class="text-sm text-gray-700">
-        Affichage de <span class="font-medium">{{ (currentPage - 1) * itemsPerPage + 1 }}</span> à 
-        <span class="font-medium">{{ Math.min(currentPage * itemsPerPage, filteredDemands.length) }}</span> sur 
+        Affichage de <span class="font-medium">{{ (currentPage - 1) * itemsPerPage + 1 }}</span> à
+        <span class="font-medium">{{ Math.min(currentPage * itemsPerPage, filteredDemands.length) }}</span> sur
         <span class="font-medium">{{ filteredDemands.length }}</span> résultats
       </p>
     </div>
     <div class="flex space-x-2">
-      <button 
-        (click)="prevPage()" 
-        [disabled]="currentPage === 1"
-        [class.opacity-50]="currentPage === 1"
-        class="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
-      >
+      <button (click)="prevPage()" [disabled]="currentPage === 1" [class.opacity-50]="currentPage === 1"
+        class="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
         Précédent
       </button>
-      
+
       <div class="hidden md:flex space-x-1">
-        <button 
-          *ngFor="let page of pages" 
-          (click)="goToPage(page)" 
+        <button *ngFor="let page of pages" (click)="goToPage(page)"
           [class]="currentPage === page ? 'bg-green-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'"
-          class="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium"
-        >
+          class="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium">
           {{ page }}
         </button>
       </div>
-      
-      <button 
-        (click)="nextPage()" 
-        [disabled]="currentPage === pageCount"
-        [class.opacity-50]="currentPage === pageCount"
-        class="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
-      >
+
+      <button (click)="nextPage()" [disabled]="currentPage === pageCount" [class.opacity-50]="currentPage === pageCount"
+        class="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
         Suivant
       </button>
     </div>
   </div>
-  
+
   <!-- Reject Modal -->
-  <div 
-    *ngIf="showRejectModal" 
-    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-  >
+  <div *ngIf="showRejectModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
     <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4 overflow-hidden">
       <div class="bg-gray-50 px-4 py-3 border-b flex justify-between items-center">
         <h3 class="text-lg font-medium text-gray-900">Motif du rejet</h3>
-        <button 
-          class="text-gray-400 hover:text-gray-500" 
-          (click)="closeRejectModal()"
-        >
+        <button class="text-gray-400 hover:text-gray-500" (click)="closeRejectModal()">
           <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
@@ -201,25 +189,19 @@
         <label class="block text-gray-700 text-sm font-medium mb-2">
           Veuillez indiquer le motif du rejet
         </label>
-        <textarea 
+        <textarea
           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 h-32"
-          placeholder="Saisissez le motif du rejet..."
-          [(ngModel)]="rejectReason"
-        ></textarea>
+          placeholder="Saisissez le motif du rejet..." [(ngModel)]="rejectReason"></textarea>
       </div>
       <div class="bg-gray-50 px-4 py-3 flex justify-end space-x-3 border-t">
-        <button 
+        <button
           class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
-          (click)="closeRejectModal()"
-        >
+          (click)="closeRejectModal()">
           Annuler
         </button>
-        <button 
+        <button
           class="px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-700"
-          [disabled]="!rejectReason.trim()"
-          [class.opacity-50]="!rejectReason.trim()"
-          (click)="confirmReject()"
-        >
+          [disabled]="!rejectReason.trim()" [class.opacity-50]="!rejectReason.trim()" (click)="confirmReject()">
           Confirmer le rejet
         </button>
       </div>

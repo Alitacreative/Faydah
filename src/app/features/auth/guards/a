@@ -1,0 +1,164 @@
+// 1. AUTH GUARDS
+
+// src/app/guards/auth.guard.ts
+
+
+// src/app/guards/guest.guard.ts - Empêche l'accès aux pages login/register si déjà connecté
+
+
+// src/app/guards/admin.guard.ts
+
+
+// 2. DEVICE DETECTION GUARDS
+
+// src/app/services/device.service.ts
+
+
+// src/app/guards/desktop-only.guard.ts
+
+
+// src/app/guards/mobile-only.guard.ts
+
+
+// src/app/guards/responsive.guard.ts - Guard flexible avec configuration
+
+
+// 3. UTILISATION DANS LE ROUTING
+
+// src/app/app-routing.module.ts
+import { NgModule } from '@angular/core';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth.guard';
+import { GuestGuard } from './guards/guest.guard';
+import { AdminGuard } from './guards/admin.guard';
+import { DesktopOnlyGuard } from './guards/desktop-only.guard';
+import { ResponsiveGuard } from './guards/responsive.guard';
+
+const routes: Routes = [
+  {
+    path: '',
+    redirectTo: '/login',
+    pathMatch: 'full'
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule),
+    canActivate: [GuestGuard]
+  },
+  {
+    path: 'register',
+    loadChildren: () => import('./pages/register/register.module').then(m => m.RegisterPageModule),
+    canActivate: [GuestGuard]
+  },
+  {
+    path: 'dashboard',
+    loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'admin',
+    loadChildren: () => import('./pages/admin/admin.module').then(m => m.AdminPageModule),
+    canActivate: [AuthGuard, AdminGuard]
+  },
+  {
+    path: 'desktop-app',
+    loadChildren: () => import('./pages/desktop-app/desktop-app.module').then(m => m.DesktopAppPageModule),
+    canActivate: [AuthGuard, DesktopOnlyGuard]
+  },
+  {
+    path: 'reports',
+    loadChildren: () => import('./pages/reports/reports.module').then(m => m.ReportsPageModule),
+    canActivate: [AuthGuard, ResponsiveGuard],
+    data: { 
+      allowedDevices: ['desktop', 'tablet'],
+      redirectUrl: '/mobile-reports'
+    }
+  },
+  {
+    path: 'mobile-reports',
+    loadChildren: () => import('./pages/mobile-reports/mobile-reports.module').then(m => m.MobileReportsPageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'mobile-not-supported',
+    loadChildren: () => import('./pages/mobile-not-supported/mobile-not-supported.module').then(m => m.MobileNotSupportedPageModule)
+  },
+  {
+    path: 'device-not-supported',
+    loadChildren: () => import('./pages/device-not-supported/device-not-supported.module').then(m => m.DeviceNotSupportedPageModule)
+  },
+  {
+    path: 'unauthorized',
+    loadChildren: () => import('./pages/unauthorized/unauthorized.module').then(m => m.UnauthorizedPageModule)
+  }
+];
+
+@NgModule({
+  imports: [
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+  ],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+
+// 4. PAGES D'ERREUR
+
+// src/app/pages/mobile-not-supported/mobile-not-supported.page.ts
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+
+@Component({
+  selector: 'app-mobile-not-supported',
+  template: `
+    <ion-content class="ion-padding">
+      <div class="error-container">
+        <ion-icon name="desktop-outline" size="large"></ion-icon>
+        <h2>Accès Desktop Requis</h2>
+        <p>Cette fonctionnalité n'est disponible que sur ordinateur desktop.</p>
+        <p *ngIf="requestedUrl">Vous avez tenté d'accéder à: {{ requestedUrl }}</p>
+        
+        <ion-button (click)="goBack()">
+          <ion-icon name="arrow-back" slot="start"></ion-icon>
+          Retour
+        </ion-button>
+      </div>
+    </ion-content>
+  `,
+  styles: [`
+    .error-container {
+      text-align: center;
+      max-width: 400px;
+      margin: 50px auto;
+    }
+    
+    ion-icon {
+      color: var(--ion-color-medium);
+      margin-bottom: 20px;
+    }
+    
+    h2 {
+      color: var(--ion-color-primary);
+      margin-bottom: 16px;
+    }
+    
+    p {
+      color: var(--ion-color-medium);
+      margin-bottom: 16px;
+    }
+  `]
+})
+export class MobileNotSupportedPage {
+  requestedUrl: string;
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    this.requestedUrl = this.route.snapshot.queryParams['requestedUrl'];
+  }
+
+  goBack() {
+    this.router.navigate(['/dashboard']);
+  }
+}
+

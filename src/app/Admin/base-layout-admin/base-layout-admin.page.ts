@@ -1,7 +1,5 @@
 import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { BaseLayoutAdminService } from './base-layout-admin.service';
-import { ModalController } from '@ionic/angular';
-import { DetailProfilModalComponent } from './components/detail-profil-modal/detail-profil-modal.component';
 
 @Component({
   selector: 'app-base-layout-admin',
@@ -30,10 +28,10 @@ export class BaseLayoutAdminPage implements OnInit {
   }
 
   toggleSidebar() {
-    this.isSidebarOpen = !this.isSidebarOpen;
+    this.isSidebarOpen = !this.isSidebarOpen;    
   }
 
-  constructor(private navigationService: BaseLayoutAdminService, private modalController: ModalController) {}
+  constructor(private navigationService: BaseLayoutAdminService) {}
 
   ngOnInit() {
     this.navigationService.activeTab$.subscribe(tab => {
@@ -50,17 +48,4 @@ export class BaseLayoutAdminPage implements OnInit {
   isActive(tab: string): boolean {
     return this.activeTab === tab;
   }
-
-  async openProfileDetail() {
-    const modal = await this.modalController.create({
-      component: DetailProfilModalComponent,
-      // componentProps: {
-      //   profileData: this.profileData
-      // },
-      cssClass: 'profile-detail-modal'
-    });
-
-    return await modal.present();
-  }
-
 }
