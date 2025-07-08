@@ -1,0 +1,215 @@
+<ion-header >
+  <ion-toolbar class="px-4">
+    <ion-title class="text-lg font-semibold">Événements Tourisme</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="sticky top-0 z-10 bg-gray-100 border-none border-gray-200 shadow-sm">
+    <div class="px-4 py-4 -mt-1">
+      <!-- Barre de recherche -->
+      <div class="flex gap-2">
+        <div class="relative flex-1">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
+          <input [(ngModel)]="searchTerm" (input)="onSearch($any($event.target).value)" type="text"
+            class="block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-xl bg-gray-50 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 text-sm placeholder-gray-500"
+            placeholder="Rechercher par titre, description, lieu, statut..." />
+          <button *ngIf="searchTerm" (click)="clearSearch()"
+            class="absolute inset-y-0 right-0 pr-3 flex items-center hover:text-gray-600 transition-colors">
+            <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <button (click)="refresh()" class="p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors">
+          <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenu principal -->
+  <div class="px-4 py-6">
+    <!-- Loading state -->
+    <div *ngIf="loading && allEvents.length === 0" class="flex flex-col items-center justify-center py-12">
+      <div class="animate-spin rounded-full h-8 w-8 border-2 border-green-600 border-t-transparent mb-4"></div>
+      <p class="text-green-600 font-medium">Chargement des événements...</p>
+    </div>
+
+    <!-- Error state -->
+    <div *ngIf="error && !loading" class="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center">
+          <svg class="h-5 w-5 text-red-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span class="text-red-800 font-medium">{{ error }}</span>
+        </div>
+        <button (click)="refresh()"
+          class="px-3 py-1.5 text-sm bg-red-100 text-red-800 rounded-lg hover:bg-red-200 transition-colors font-medium">
+          Réessayer
+        </button>
+      </div>
+    </div>
+
+    <!-- Empty search results -->
+    <div *ngIf="isEmptySearch() && !loading && !error" class="flex flex-col items-center justify-center py-16">
+      <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+        <svg class="h-8 w-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      </div>
+      <h3 class="text-lg font-semibold text-gray-900 mb-2">Aucun résultat trouvé</h3>
+      <p class="text-gray-500 text-center mb-6 max-w-sm">
+        Aucun événement ne correspond à votre recherche "{{ searchTerm }}"
+      </p>
+      <button (click)="clearSearch()"
+        class="px-6 py-2.5 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-colors font-medium">
+        Effacer la recherche
+      </button>
+    </div>
+
+    <!-- Grille des événements -->
+    <div *ngIf="hasResults() && !loading" class="overflow-x-auto hide-scrollbar mb-4">
+      <div class="flex gap-4">
+        <!-- Card Événement -->
+        <div *ngFor="let event of events" (click)="onCardClick(event)"
+          class="w-72 min-w-72 max-w-72 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-lg hover:border-gray-200 transition-all duration-200 cursor-pointer group overflow-hidden flex-shrink-0">
+
+          <div class="p-5">
+            <!-- Header avec titre et statut -->
+            <div class="flex items-start justify-between mb-4">
+              <div class="flex-1 min-w-0">
+                <h3 class="text-lg font-semibold text-gray-900 truncate group-hover:text-green-600 transition-colors">
+                  {{ event.title }}
+                </h3>
+                <p class="text-sm text-gray-500 mt-0.5 truncate">{{ event.location }}</p>
+              </div>
+              <div class="ml-3 flex-shrink-0">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
+                  [class.bg-green-100]="event.status === 'À venir'"
+                  [class.text-green-800]="event.status === 'À venir'"
+                  [class.bg-yellow-100]="event.status === 'En cours'"
+                  [class.text-yellow-800]="event.status === 'En cours'"
+                  [class.bg-blue-100]="event.status === 'Terminé'"
+                  [class.text-blue-800]="event.status === 'Terminé'">
+                  {{ event.status }}
+                </span>
+              </div>
+            </div>
+
+            <img [src]="event.image" alt="{{ event.title }}" class="w-full h-40 object-cover rounded-lg mb-4">
+
+            <div class="space-y-2.5">
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-gray-600">Catégorie</span>
+                <span class="font-semibold text-gray-900">{{ event.category }}</span>
+              </div>
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-gray-600">Participants</span>
+                <span class="font-semibold text-gray-900">{{ event.participants }}</span>
+              </div>
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-gray-600">Durée</span>
+                <span class="font-semibold text-gray-900">{{ event.duration }}</span>
+              </div>
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-gray-600">Date</span>
+                <span class="font-semibold text-gray-900">{{ event.date }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer avec hover effect -->
+          <div class="px-5 py-3 bg-gray-50 border-t border-gray-100 group-hover:bg-green-50 transition-colors">
+            <div class="flex items-center justify-between text-xs text-gray-500 group-hover:text-green-600">
+              <span>Détails</span>
+              <div class="flex items-center">
+                <span class="mr-1">Voir</span>
+                <svg class="h-4 w-4 transform group-hover:translate-x-1 transition-transform" fill="none"
+                  stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fin scroll horizontal events -->
+
+    <!-- Section événements postulés -->
+    <div *ngIf="hasPostules()" class="mt-8">
+      <h2 class="text-lg font-semibold mb-4">Événements auxquels j'ai postulé</h2>
+      <div class="overflow-x-auto hide-scrollbar mb-4">
+        <div class="flex gap-4">
+          <div *ngFor="let event of eventsPostules" (click)="onCardClick(event)"
+            class="w-72 min-w-72 max-w-72 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-lg hover:border-gray-200 transition-all duration-200 cursor-pointer group overflow-hidden flex-shrink-0">
+            <div class="p-5">
+              <div class="flex items-start justify-between mb-4">
+                <div class="flex-1 min-w-0">
+                  <h3 class="text-lg font-semibold text-gray-900 truncate group-hover:text-green-600 transition-colors">
+                    {{ event.title }}
+                  </h3>
+                  <p class="text-sm text-gray-500 mt-0.5 truncate">{{ event.location }}</p>
+                </div>
+                <div class="ml-3 flex-shrink-0">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
+                    [class.bg-green-100]="event.status === 'À venir'"
+                    [class.text-green-800]="event.status === 'À venir'"
+                    [class.bg-yellow-100]="event.status === 'En cours'"
+                    [class.text-yellow-800]="event.status === 'En cours'"
+                    [class.bg-blue-100]="event.status === 'Terminé'"
+                    [class.text-blue-800]="event.status === 'Terminé'">
+                    {{ event.status }}
+                  </span>
+                </div>
+              </div>
+              <img [src]="event.image" alt="{{ event.title }}" class="w-full h-40 object-cover rounded-lg mb-4">
+              <div class="space-y-2.5">
+                <div class="flex items-center justify-between text-sm">
+                  <span class="text-gray-600">Catégorie</span>
+                  <span class="font-semibold text-gray-900">{{ event.category }}</span>
+                </div>
+                <div class="flex items-center justify-between text-sm">
+                  <span class="text-gray-600">Participants</span>
+                  <span class="font-semibold text-gray-900">{{ event.participants }}</span>
+                </div>
+                <div class="flex items-center justify-between text-sm">
+                  <span class="text-gray-600">Durée</span>
+                  <span class="font-semibold text-gray-900">{{ event.duration }}</span>
+                </div>
+                <div class="flex items-center justify-between text-sm">
+                  <span class="text-gray-600">Date</span>
+                  <span class="font-semibold text-gray-900">{{ event.date }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="px-5 py-3 bg-gray-50 border-t border-gray-100 group-hover:bg-green-50 transition-colors">
+              <div class="flex items-center justify-between text-xs text-gray-500 group-hover:text-green-600">
+                <span>Détails</span>
+                <div class="flex items-center">
+                  <span class="mr-1">Voir</span>
+                  <svg class="h-4 w-4 transform group-hover:translate-x-1 transition-transform" fill="none"
+                    stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

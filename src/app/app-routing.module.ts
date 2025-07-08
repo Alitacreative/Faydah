@@ -79,7 +79,11 @@ const routes: Routes = [
   {
     path: 'mymoukhadam/:id',
     loadChildren: () => import('./features/my-moukhadam/my-moukhadam.module').then( m => m.MyMoukhadamPageModule)
+  },  {
+    path: 'tourisme',
+    loadChildren: () => import('./features/tourisme/tourisme.module').then( m => m.TourismePageModule)
   },
+
 
 
   // Route fallback si aucune correspondance
